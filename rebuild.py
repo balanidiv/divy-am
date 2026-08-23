@@ -13,6 +13,11 @@ self-serve refresh needs a Notion integration token on the host, plus
 a fetch step that writes site-data.json.
 
 The SITE-8 logo-row is preserved byte-for-byte and is never regenerated.
+
+Rebuild only replaces intro / work / education / writing. Footer, head,
+title, the hero chrome (portrait + right-aligned sun/moon toggle, name +
+right-aligned socials), and My Toolbox heading are left alone so a Notion
+rebuild cannot move the toggle or X/LinkedIn/Email/Resume back into the footer.
 """
 
 from __future__ import annotations
@@ -28,7 +33,7 @@ HTML = ROOT / "index.html"
 
 LOGO_RE = re.compile(r'<div class="logo-row"[^>]*>.*?</div>', re.S)
 INTRO_RE = re.compile(
-    r'(<div class="space-y-3">)(.*?)(</div>\s*<div class="logo-row")',
+    r'(<div class="space-y-3">)(.*?)(</div>)',
     re.S,
 )
 WORK_RE = re.compile(
@@ -45,7 +50,7 @@ WRITING_RE = re.compile(
     re.S,
 )
 WORK_SECTION_RE = re.compile(
-    r'(<section class="space-y-4" id="work"[^>]*>.*?</section>)',
+    r'(<section class="(?:space-y-4|section-stack)" id="work"[^>]*>.*?</section>)',
     re.S,
 )
 
@@ -204,8 +209,36 @@ def main() -> int:
     else:
         print("logo-row unchanged.")
 
+    footer_m = re.search(r"<footer\b.*?</footer>", html, re.S)
+    footer_html = footer_m.group(0) if footer_m else ""
+    if 'id="theme-toggle"' in footer_html:
+        raise SystemExit("theme toggle must stay on the portrait line; found in footer")
+    if 'id="theme-toggle"' not in html:
+        raise SystemExit("theme toggle missing after rebuild")
+    if 'class="social-row"' not in html or "hero-name-row" not in html:
+        raise SystemExit("name+socials row missing after rebuild")
+    if "social-row" in footer_html or "Resume" in footer_html:
+        raise SystemExit("socials/Resume must stay on the name line; found in footer")
+    if "hero-ident" not in html:
+        raise SystemExit("portrait+toggle row missing after rebuild")
+    if "theme-icon-sun" not in html or "theme-icon-moon" not in html:
+        raise SystemExit("sun/moon theme icons missing after rebuild")
+    if html.find("div-portrait.jpg") > html.find('id="theme-toggle"'):
+        raise SystemExit("toggle must sit to the right of the portrait on the same line")
+    if html.find("<h1") > html.find('class="social-row"'):
+        raise SystemExit("social-row must sit on the same line as the name")
+    if html.find('class="social-row"') > html.find('class="space-y-3"'):
+        raise SystemExit("social-row must stay above the intro")
+    if "My Toolbox" not in html or "toolbox-heading" not in html:
+        raise SystemExit("My Toolbox heading missing after rebuild")
+    if "1cUJ8cGwihEbyEVqy46okNAMeiOpWa98U" not in html:
+        raise SystemExit("Drive resume href missing after rebuild")
+    if "<title>Div Balani</title>" not in html:
+        raise SystemExit("title must stay Div Balani")
+
     HTML.write_text(html, encoding="utf-8")
     print(f"wrote {HTML} from {DATA}")
+    print("theme-toggle (sun/moon) on portrait line; social-row on name line.")
     excluded = data.get("posts_excluded") or []
     if excluded:
         titles = ", ".join(p.get("title", "?") for p in excluded)

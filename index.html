@@ -100,10 +100,37 @@
 </head>
 <body class="min-h-dvh flex flex-col gap-8 py-4 md:py-8 items-start bg-[#fdfcfb] dark:bg-[#161513] text-[#1a180f]/80 dark:text-[#ece9e3]/95 leading-relaxed antialiased">
   <div class="flex-1 w-full">
-    <main class="page mx-auto pt-12 md:pt-20 space-y-12">
+    <main class="page mx-auto pt-4 md:pt-8 space-y-12">
       <div class="space-y-4">
-        <img src="./assets/div-portrait.jpg" alt="Divyam Balani" class="face" width="72" height="72" />
+        <div class="hero-ident">
+          <img src="./assets/div-portrait.jpg" alt="Divyam Balani" class="face" width="72" height="72" />
+          <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Theme: system" class="theme-toggle-chrome group inline-flex cursor-pointer bg-transparent border-0 p-0">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-sun">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M12 3v1.6M12 19.4V21M4.93 4.93l1.13 1.13M17.94 17.94l1.13 1.13M3 12h1.6M19.4 12H21M4.93 19.07l1.13-1.13M17.94 6.06l1.13-1.13"/>
+            </svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-moon">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M16.8 15.2A7 7 0 0 1 8.8 7.2 7 7 0 1 0 16.8 15.2z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="hero-name-row">
         <h1>Divyam Balani</h1>
+        <ul class="social-row" aria-label="Links">
+          <li class="flex">
+            <a target="_blank" rel="noopener noreferrer" href="https://x.com/balanidiv">X</a>
+          </li>
+          <li class="flex">
+            <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/balanidiv">LinkedIn</a>
+          </li>
+          <li class="flex">
+            <a href="mailto:divyambalani@gmail.com">Email</a>
+          </li>
+          <li class="flex">
+            <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1cUJ8cGwihEbyEVqy46okNAMeiOpWa98U/view?usp=sharing">Resume</a>
+          </li>
+        </ul>
+        </div>
         <div class="space-y-3">
           <p>
             Hey I’m Div. Currently I work on product &amp; growth stuff at <a href="https://care.com/" target="_blank" rel="noopener noreferrer">Care.com</a> in Austin. It’s a consumer growth role, across all six of care.com’s marketplaces.
@@ -116,7 +143,9 @@
           </p>
         </div>
 
-        <div class="logo-row" aria-label="Tools">
+        <section class="section-stack" id="toolbox" aria-labelledby="toolbox-heading">
+        <h2 id="toolbox-heading">My Toolbox</h2>
+        <div class="logo-row" aria-label="My Toolbox">
           <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" aria-label="Figma" title="Figma">
             <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 20.5c0-3.007 2.437-5.444 5.444-5.444S30.888 17.493 30.888 20.5s-2.437 5.444-5.444 5.444S20 23.507 20 20.5z" fill="#1ABCFE"/><path d="M9.112 31.388c0-3.007 2.437-5.444 5.444-5.444H20v5.444c0 3.007-2.437 5.444-5.444 5.444s-5.444-2.437-5.444-5.444z" fill="#0ACF83"/><path d="M20 4.168v10.888h5.444c3.007 0 5.444-2.437 5.444-5.444S28.451 4.168 25.444 4.168H20z" fill="#FF7262"/><path d="M9.112 9.612c0 3.007 2.437 5.444 5.444 5.444H20V4.168h-5.444c-3.007 0-5.444 2.437-5.444 5.444z" fill="#F24E1E"/><path d="M9.112 20.5c0 3.007 2.437 5.444 5.444 5.444H20V15.056h-5.444c-3.007 0-5.444 2.437-5.444 5.444z" fill="#A259FF"/></svg>
           </a>
@@ -139,9 +168,10 @@
             <svg viewBox="0 0 127 127" aria-hidden="true"><path d="M27.2 80c0 7.3-5.9 13.2-13.2 13.2C6.7 93.2.8 87.3.8 80c0-7.3 5.9-13.2 13.2-13.2h13.2V80zm6.6 0c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V80z" fill="#E01E5A"/><path d="M47 27c-7.3 0-13.2-5.9-13.2-13.2C33.8 6.5 39.7.6 47 .6c7.3 0 13.2 5.9 13.2 13.2V27H47zm0 6.7c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H13.9C6.6 60.1.7 54.2.7 46.9c0-7.3 5.9-13.2 13.2-13.2H47z" fill="#36C5F0"/><path d="M99.9 46.9c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H99.9V46.9zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V13.8C66.9 6.5 72.8.6 80.1.6c7.3 0 13.2 5.9 13.2 13.2v33.1z" fill="#2EB67D"/><path d="M80.1 99.8c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V99.8h13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2 0-7.3 5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H80.1z" fill="#ECB22E"/></svg>
           </a>
         </div>
+        </section>
       </div>
 
-      <section class="space-y-4" id="work" aria-labelledby="work-heading">
+      <section class="section-stack" id="work" aria-labelledby="work-heading">
         <h2 id="work-heading">Work</h2>
         <ul class="flex flex-col gap-2 list-none p-0 m-0 work-list">
           <li>
@@ -256,7 +286,7 @@ Built the B2C and the B2B product 0-1 (web app + 2 mobile apps), built data pipe
         </ul>
       </section>
 
-      <section class="space-y-4" aria-labelledby="education-heading">
+      <section class="section-stack" aria-labelledby="education-heading">
         <h2 id="education-heading">Education</h2>
         <ul class="flex flex-col gap-4 list-none p-0 m-0">
           <li class="flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4">
@@ -275,26 +305,7 @@ Built the B2C and the B2B product 0-1 (web app + 2 mobile apps), built data pipe
     </main>
   </div>
 
-  <footer class="page mt-auto mx-auto py-8 flex flex-col items-center gap-8">
-    <div class="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-8 w-full">
-      <ul class="flex flex-row items-center list-none mx-auto md:ml-auto gap-4 p-0 m-0">
-        <li class="flex">
-          <a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://x.com/balanidiv">X</a>
-        </li>
-        <li class="flex">
-          <a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://www.linkedin.com/in/balanidiv">LinkedIn</a>
-        </li>
-        <li class="flex">
-          <a class="transition text-xs py-2 opacity-60 hover:opacity-100" href="mailto:divyambalani@gmail.com">Email</a>
-        </li>
-      </ul>
-    </div>
-    <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Theme: system" class="group inline-flex cursor-pointer bg-transparent border-0 p-0">
-      <svg aria-hidden="true" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="theme-star h-8 w-auto opacity-20 transition-opacity group-hover:opacity-40 text-[#1a180f] dark:text-[#ece9e3]">
-        <path fill="currentColor" d="M15.25 3h1.5l.35 9.35 6.65-6.65 1.06 1.06-6.65 6.65L27 14.25v1.5l-9.35.35 6.65 6.65-1.06 1.06-6.65-6.65-.35 9.35h-1.5l-.35-9.35-6.65 6.65-1.06-1.06 6.65-6.65L5 15.75v-1.5l9.35-.35-6.65-6.65 1.06-1.06 6.65 6.65L15.25 3z"/>
-      </svg>
-    </button>
-  </footer>
+  <footer class="page mt-auto mx-auto py-8"></footer>
 
   <script>
     (function () {
@@ -302,14 +313,19 @@ Built the B2C and the B2B product 0-1 (web app + 2 mobile apps), built data pipe
       if (!btn) return;
       const label = () => {
         const pref = window.__getTheme ? window.__getTheme() : "system";
+        const resolved = window.__getResolvedTheme ? window.__getResolvedTheme() : (document.documentElement.classList.contains("dark") ? "dark" : "light");
         btn.setAttribute("aria-label", "Toggle theme (currently " + pref + ")");
         btn.setAttribute("title", "Theme: " + pref);
+        btn.dataset.resolved = resolved;
       };
       label();
       btn.addEventListener("click", function () {
         if (window.__cycleTheme) window.__cycleTheme();
         label();
       });
+      try {
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", label);
+      } catch (_) {}
     })();
   </script>
 </body>
