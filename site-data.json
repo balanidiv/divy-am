@@ -1,6 +1,6 @@
 {
-  "pulled_at": "2026-08-23T19:39:06Z",
-  "pulled_at_ct": "2026-08-23 2:39 PM CT",
+  "pulled_at": "2026-08-23T19:44:31Z",
+  "pulled_at_ct": "2026-08-23 2:44 PM CT",
   "pulled_via": "GitHub Action + Notion API",
   "note": "Live on Railway (https://divy.am/). Tab title is Div Balani. Logo-row is SITE-8 and is not regenerated from this file.",
   "sources": {
@@ -34,10 +34,10 @@
   },
   "intro": [
     {
-      "html": "Hey I’m Div. I&#x27;m a Principal PM at <a href=\"https://care.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Care.com</a> in Austin — consumer growth across six care marketplaces, after building the Camps &amp; Activities vertical 0–1."
+      "html": "Hey I’m Div. Currently I work on product &amp; growth stuff at <a href=\"https://care.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Care.com</a> in Austin. It’s a consumer growth role, across all six of care.com’s marketplaces."
     },
     {
-      "html": "Before that I was first PM at <a href=\"https://gloco.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">Gloco.ai</a>, and I co-founded <a href=\"https://deliverend.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Deliverend</a> and <a href=\"https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Aggressively Organic</a> (100k+ orders)."
+      "html": "Before that I was first PM at <a href=\"https://gloco.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">Gloco.ai</a> (imagine if LegalZoom &amp; Gusto had a baby), and I co-founded <a href=\"https://deliverend.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Deliverend</a> (Doordash but for items on Facebook Marketplace) and <a href=\"https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Aggressively Organic</a> (vertical farming)."
     },
     {
       "html": "People always tell me that psychology and math are two ends of the spectrum. To me they are closer than ever."
