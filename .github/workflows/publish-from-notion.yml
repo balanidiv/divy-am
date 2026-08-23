@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -34,3 +34,20 @@ jobs:
             git commit -m "Publish from Notion"
             git push origin HEAD:main
           fi
+
+      - name: Deploy Railway at this commit
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "RAILWAY_TOKEN secret missing" >&2
+            exit 1
+          fi
+          SHA=$(git rev-parse HEAD)
+          BODY=$(printf '{"query":"mutation($s:String!,$e:String!,$c:String){serviceInstanceDeployV2(serviceId:$s,environmentId:$e,commitSha:$c)}","variables":{"s":"b70617fc-9aaa-4179-9db3-7cb8ad72bf4b","e":"044b858b-8bfe-4fc4-95ef-83b1a620751a","c":"%s"}}' "$SHA")
+          RESP=$(curl -sS -X POST https://backboard.railway.com/graphql/v2 \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")
+          echo "$RESP"
+          echo "$RESP" | python3 -c "import json,sys; r=json.load(sys.stdin); raise SystemExit('Railway deploy failed: '+json.dumps(r)) if r.get('errors') or not (r.get('data') or {}).get('serviceInstanceDeployV2') else print('deployed', r['data']['serviceInstanceDeployV2'])"
