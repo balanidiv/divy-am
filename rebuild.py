@@ -182,7 +182,12 @@ def main() -> int:
     logo_html = logo.group(0)
 
     html = sub_one(INTRO_RE, html, render_intro(data["intro"]), "intro")
-    html = sub_one(WORK_RE, html, render_work(data["work"]), "work")
+    work = sorted(data.get("work") or [], key=lambda job: (
+        (job.get("date_start") or "").strip()
+        or (job.get("date_end") or "").strip()
+        or ("9999-12-31" if "present" in (job.get("dates") or "").lower() or "now" in (job.get("dates") or "").lower() else "0000-00-00")
+    ), reverse=True)
+    html = sub_one(WORK_RE, html, render_work(work), "work")
     html = sub_one(EDU_RE, html, render_education(data["education"]), "education")
 
     html = WRITING_RE.sub("", html)

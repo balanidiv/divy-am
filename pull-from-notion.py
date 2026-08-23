@@ -511,6 +511,20 @@ def extract_work_row(page: dict, existing_by_key: dict) -> dict:
     return row
 
 
+def work_sort_key(job: dict) -> str:
+    """Newest-first: date_start, else last date, else now if present/current."""
+    start = (job.get("date_start") or "").strip()
+    if start:
+        return start
+    end = (job.get("date_end") or "").strip()
+    if end:
+        return end
+    dates = (job.get("dates") or "").lower()
+    if "present" in dates or "now" in dates:
+        return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return "0000-00-00"
+
+
 def pull_work(existing: dict) -> list[dict]:
     existing_by_key = {name_key(job.get("name") or ""): job for job in existing.get("work") or []}
     pages = query_database(WORK_DB_ID)
@@ -519,6 +533,7 @@ def pull_work(existing: dict) -> list[dict]:
         row = extract_work_row(page, existing_by_key)
         if row.get("name"):
             rows.append(row)
+    rows.sort(key=work_sort_key, reverse=True)
     return rows
 
 

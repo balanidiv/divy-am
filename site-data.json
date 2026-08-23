@@ -66,55 +66,6 @@
   ],
   "work": [
     {
-      "name": "Aggressively Organic",
-      "url": "https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/",
-      "notion_url": "https://app.notion.com/p/28b635ae42888041a772f067488b9e40",
-      "notion_title": "Head of Product",
-      "display_role": "Head of Product, co-founder",
-      "outcome": "100k+ customers · $2.5m revenue",
-      "dates": "May 2017–Nov 2019",
-      "date_start": "2017-05-01",
-      "date_end": "2019-11-17",
-      "location": "Indianapolis, IN (On-site)",
-      "roles": [
-        "Product",
-        "Product Marketing",
-        "Growth",
-        "Data Engineering",
-        "Business Analysis",
-        "Co-Founder"
-      ],
-      "body": [
-        {
-          "type": "p",
-          "html": "Co-founded the single-pod hydroponic growth pod to end food insecurity, and reduce reliance on brittle supply chains. Fast Company called us one of the world-changing ideas."
-        },
-        {
-          "type": "p",
-          "html": "Built the product 0-1 with a visionary co-founder, filed patents, built the infra, sold 200k+ pods to individual families, and 300k+ pods to indoor vertical farms including the cannabis industry."
-        },
-        {
-          "type": "p",
-          "html": "Raised 200k through friends &amp; family, revenue did upwards of $2.5M+ in 2018, learned a lot, failed a lot, had a lot of fun."
-        },
-        {
-          "type": "p",
-          "html": "Some stats:"
-        },
-        {
-          "type": "ul",
-          "items": [
-            "Featured in <a href=\"https://www.youtube.com/watch?v=BvnOAIYDDC4\" target=\"_blank\" rel=\"noopener noreferrer\">Forbes</a>, <a href=\"https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen\" target=\"_blank\" rel=\"noopener noreferrer\">Fast Company</a>, <a href=\"https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/\" target=\"_blank\" rel=\"noopener noreferrer\">IndyStar</a> and many other outlets",
-            "$2.5m in revenue",
-            "100,000+ customers",
-            "<a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">Won SXSW’s “Food and City” award,</a> and <a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">People’s Choice Awards</a>",
-            "Licensed patent-pending technology to 10+ farming companies in multiple states"
-          ]
-        }
-      ],
-      "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City."
-    },
-    {
       "name": "Care.com",
       "url": "https://care.com/",
       "notion_url": "https://app.notion.com/p/28b635ae428880ab9c27d6db4fcb9d5d",
@@ -268,6 +219,55 @@
           "html": "<a href=\"https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/\" target=\"_blank\" rel=\"noopener noreferrer\">https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/</a>"
         }
       ]
+    },
+    {
+      "name": "Aggressively Organic",
+      "url": "https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/",
+      "notion_url": "https://app.notion.com/p/28b635ae42888041a772f067488b9e40",
+      "notion_title": "Head of Product",
+      "display_role": "Head of Product, co-founder",
+      "outcome": "100k+ customers · $2.5m revenue",
+      "dates": "May 2017–Nov 2019",
+      "date_start": "2017-05-01",
+      "date_end": "2019-11-17",
+      "location": "Indianapolis, IN (On-site)",
+      "roles": [
+        "Product",
+        "Product Marketing",
+        "Growth",
+        "Data Engineering",
+        "Business Analysis",
+        "Co-Founder"
+      ],
+      "body": [
+        {
+          "type": "p",
+          "html": "Co-founded the single-pod hydroponic growth pod to end food insecurity, and reduce reliance on brittle supply chains. Fast Company called us one of the world-changing ideas."
+        },
+        {
+          "type": "p",
+          "html": "Built the product 0-1 with a visionary co-founder, filed patents, built the infra, sold 200k+ pods to individual families, and 300k+ pods to indoor vertical farms including the cannabis industry."
+        },
+        {
+          "type": "p",
+          "html": "Raised 200k through friends &amp; family, revenue did upwards of $2.5M+ in 2018, learned a lot, failed a lot, had a lot of fun."
+        },
+        {
+          "type": "p",
+          "html": "Some stats:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Featured in <a href=\"https://www.youtube.com/watch?v=BvnOAIYDDC4\" target=\"_blank\" rel=\"noopener noreferrer\">Forbes</a>, <a href=\"https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen\" target=\"_blank\" rel=\"noopener noreferrer\">Fast Company</a>, <a href=\"https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/\" target=\"_blank\" rel=\"noopener noreferrer\">IndyStar</a> and many other outlets",
+            "$2.5m in revenue",
+            "100,000+ customers",
+            "<a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">Won SXSW’s “Food and City” award,</a> and <a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">People’s Choice Awards</a>",
+            "Licensed patent-pending technology to 10+ farming companies in multiple states"
+          ]
+        }
+      ],
+      "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City."
     }
   ],
   "posts_published": [],
