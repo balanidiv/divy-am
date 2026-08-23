@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Div Balani</title>
+  <meta name="description" content="Principal PM at Care.com. Marketplace product. Two-time founder. Austin." />
+  <meta property="og:title" content="Div Balani" />
+  <meta property="og:description" content="Principal PM at Care.com. Marketplace product. Two-time founder. Austin." />
+  <meta name="theme-color" content="#fdfcfb" />
+  <link rel="canonical" href="/" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Divyam Balani",
+    "alternateName": "Div Balani",
+    "url": "https://divy.am/",
+    "jobTitle": "Principal Product Manager",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Care.com",
+      "url": "https://www.care.com/"
+    },
+    "homeLocation": {
+      "@type": "Place",
+      "name": "Austin, TX",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      }
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Indiana University"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/balanidiv",
+      "https://x.com/balanidiv",
+      "https://github.com/balanidiv"
+    ]
+  }
+  </script>
+  <script>
+    (function () {
+      try {
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const getStored = () => localStorage.getItem("theme");
+        const resolve = () => {
+          const pref = getStored();
+          if (pref === "light" || pref === "dark") return pref;
+          return media.matches ? "dark" : "light";
+        };
+        const apply = () => {
+          const mode = resolve();
+          document.documentElement.classList.toggle("dark", mode === "dark");
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", mode === "dark" ? "#161513" : "#fdfcfb");
+        };
+        if (!getStored()) localStorage.setItem("theme", "system");
+        apply();
+        media.addEventListener("change", apply);
+        window.__setTheme = (pref) => {
+          localStorage.setItem("theme", pref);
+          apply();
+        };
+        window.__getTheme = () => getStored() || "system";
+        window.__getResolvedTheme = () => resolve();
+        window.__cycleTheme = () => {
+          const order = ["system", "light", "dark"];
+          const current = window.__getTheme();
+          const next = order[(order.indexOf(current) + 1) % order.length];
+          window.__setTheme(next);
+          return next;
+        };
+      } catch (_) {
+        /* no-op */
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["New York", "ui-serif", "Iowan Old Style", "Palatino", "Palatino Linotype", "Georgia", "serif"],
+            serif: ["New York", "ui-serif", "Iowan Old Style", "Palatino", "Palatino Linotype", "Georgia", "serif"],
+            mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="min-h-dvh flex flex-col gap-8 py-4 md:py-8 items-start bg-[#fdfcfb] dark:bg-[#161513] text-[#1a180f]/80 dark:text-[#ece9e3]/95 leading-relaxed antialiased">
+  <div class="flex-1 w-full">
+    <main class="page mx-auto pt-12 md:pt-20 space-y-12">
+      <div class="space-y-4">
+        <img src="./assets/div-portrait.jpg" alt="Divyam Balani" class="face" width="72" height="72" />
+        <h1>Divyam Balani</h1>
+        <div class="space-y-3">
+          <p>
+            I'm Div. I'm a Principal PM at
+            <a href="https://care.com/" target="_blank" rel="noopener noreferrer">Care.com</a>
+            in Austin — consumer growth across six care marketplaces, after building the Camps &amp; Activities vertical 0–1.
+          </p>
+          <p>
+            Before that I was first PM at
+            <a href="https://gloco.ai/" target="_blank" rel="noopener noreferrer">Gloco.ai</a>,
+            and I co-founded
+            <a href="https://deliverend.com/" target="_blank" rel="noopener noreferrer">Deliverend</a>
+            and <a href="https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/" target="_blank" rel="noopener noreferrer">Aggressively Organic</a> (100k+ orders).
+          </p>
+          <p>
+            People always tell me that psychology and math are two ends of the spectrum. To me they are closer than ever.
+          </p>
+        </div>
+
+        <div class="logo-row" aria-label="Tools">
+          <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" aria-label="Figma" title="Figma">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 20.5c0-3.007 2.437-5.444 5.444-5.444S30.888 17.493 30.888 20.5s-2.437 5.444-5.444 5.444S20 23.507 20 20.5z" fill="#1ABCFE"/><path d="M9.112 31.388c0-3.007 2.437-5.444 5.444-5.444H20v5.444c0 3.007-2.437 5.444-5.444 5.444s-5.444-2.437-5.444-5.444z" fill="#0ACF83"/><path d="M20 4.168v10.888h5.444c3.007 0 5.444-2.437 5.444-5.444S28.451 4.168 25.444 4.168H20z" fill="#FF7262"/><path d="M9.112 9.612c0 3.007 2.437 5.444 5.444 5.444H20V4.168h-5.444c-3.007 0-5.444 2.437-5.444 5.444z" fill="#F24E1E"/><path d="M9.112 20.5c0 3.007 2.437 5.444 5.444 5.444H20V15.056h-5.444c-3.007 0-5.444 2.437-5.444 5.444z" fill="#A259FF"/></svg>
+          </a>
+          <a href="https://www.cursor.com/" target="_blank" rel="noopener noreferrer" aria-label="Cursor" title="Cursor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.2 3.1 20.5 11.4c.7.36.66 1.36-.07 1.66l-6.2 2.55-2.55 6.2c-.3.73-1.3.77-1.66.07L3.1 4.2c-.4-.78.32-1.64 1.1-1.1z"/></svg>
+          </a>
+          <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" aria-label="Claude" title="Claude">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="hsl(14.8, 63.1%, 59.6%)" aria-hidden="true"><path d="m19.6 66.5 19.7-11 .3-1-.3-.5h-1l-3.3-.2-11.2-.3L14 53l-9.5-.5-2.4-.5L0 49l.2-1.5 2-1.3 2.9.2 6.3.5 9.5.6 6.9.4L38 49.1h1.6l.2-.7-.5-.4-.4-.4L29 41l-10.6-7-5.6-4.1-3-2-1.5-2-.6-4.2 2.7-3 3.7.3.9.2 3.7 2.9 8 6.1L37 36l1.5 1.2.6-.4.1-.3-.7-1.1L33 25l-6-10.4-2.7-4.3-.7-2.6c-.3-1-.4-2-.4-3l3-4.2L28 0l4.2.6L33.8 2l2.6 6 4.1 9.3L47 29.9l2 3.8 1 3.4.3 1h.7v-.5l.5-7.2 1-8.7 1-11.2.3-3.2 1.6-3.8 3-2L61 2.6l2 2.9-.3 1.8-1.1 7.7L59 27.1l-1.5 8.2h.9l1-1.1 4.1-5.4 6.9-8.6 3-3.5L77 13l2.3-1.8h4.3l3.1 4.7-1.4 4.9-4.4 5.6-3.7 4.7-5.3 7.1-3.2 5.7.3.4h.7l12-2.6 6.4-1.1 7.6-1.3 3.5 1.6.4 1.6-1.4 3.4-8.2 2-9.6 2-14.3 3.3-.2.1.2.3 6.4.6 2.8.2h6.8l12.6 1 3.3 2 1.9 2.7-.3 2-5.1 2.6-6.8-1.6-16-3.8-5.4-1.3h-.8v.4l4.6 4.5 8.3 7.5L89 80.1l.5 2.4-1.3 2-1.4-.2-9.2-7-3.6-3-8-6.8h-.5v.7l1.8 2.7 9.8 14.7.5 4.5-.7 1.4-2.6 1-2.7-.6-5.8-8-6-9-4.7-8.2-.5.4-2.9 30.2-1.3 1.5-3 1.2-2.5-2-1.4-3 1.4-6.2 1.6-8 1.3-6.4 1.2-7.9.7-2.6v-.2H49L43 72l-9 12.3-7.2 7.6-1.7.7-3-1.5.3-2.8L24 86l10-12.8 6-7.9 4-4.6-.1-.5h-.3L17.2 77.4l-4.7.6-2-2 .2-3 1-1 8-5.5Z"/></svg>
+          </a>
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="Spotify" title="Spotify">
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 .3C9.12.3.3 9.12.3 20S9.12 39.7 20 39.7 39.7 30.88 39.7 20 30.88.3 20 .3Zm11.65 17.46c-.87.52-2.01.23-2.88-.65-6.35-5.17-16.13-5.64-21.9-3.12-.9.4-1.93-.02-2.32-.92-.4-.9.02-1.93.92-2.32 6.96-3.04 18.52-2.63 25.83 3.33.77.63 1.02 1.76.35 2.68Zm-.21 5.59c-.45.72-1.39.95-2.12.5-5.29-3.25-13.36-4.2-19.63-2.3-.81.24-1.67-.21-1.92-1.03-.24-.81.22-1.67 1.03-1.91 7.16-2.17 16.05-1.12 22.14 2.62.72.44.95 1.4.5 2.12Zm-2.41 5.36c-.35.58-1.11.76-1.69.41-4.63-2.83-10.45-3.47-17.31-1.9-.66.15-1.32-.26-1.47-.92-.15-.66.26-1.32.92-1.47 7.5-1.72 13.94-.98 19.13 2.17.58.36.76 1.11.42 1.71Z" fill="#1ED760"/></svg>
+          </a>
+          <a href="https://nousresearch.com/" target="_blank" rel="noopener noreferrer" aria-label="Hermes" title="Hermes (Nous Research)">
+            <img src="./assets/logos/hermes.png" alt="" width="22" height="22" />
+          </a>
+          <a href="https://www.granola.ai/" target="_blank" rel="noopener noreferrer" aria-label="Granola" title="Granola">
+            <img src="./assets/logos/granola.png" alt="" width="22" height="22" />
+          </a>
+          <a href="https://slack.com/" target="_blank" rel="noopener noreferrer" aria-label="Slack" title="Slack">
+            <svg viewBox="0 0 127 127" aria-hidden="true"><path d="M27.2 80c0 7.3-5.9 13.2-13.2 13.2C6.7 93.2.8 87.3.8 80c0-7.3 5.9-13.2 13.2-13.2h13.2V80zm6.6 0c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V80z" fill="#E01E5A"/><path d="M47 27c-7.3 0-13.2-5.9-13.2-13.2C33.8 6.5 39.7.6 47 .6c7.3 0 13.2 5.9 13.2 13.2V27H47zm0 6.7c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H13.9C6.6 60.1.7 54.2.7 46.9c0-7.3 5.9-13.2 13.2-13.2H47z" fill="#36C5F0"/><path d="M99.9 46.9c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H99.9V46.9zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V13.8C66.9 6.5 72.8.6 80.1.6c7.3 0 13.2 5.9 13.2 13.2v33.1z" fill="#2EB67D"/><path d="M80.1 99.8c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V99.8h13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2 0-7.3 5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H80.1z" fill="#ECB22E"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <section class="space-y-4" id="work" aria-labelledby="work-heading">
+        <h2 id="work-heading">Work</h2>
+        <ul class="flex flex-col gap-2 list-none p-0 m-0 work-list">
+          <li>
+            <details>
+              <summary>
+                <span class="caret" aria-hidden="true"></span>
+                <span class="work-main">
+                  <span class="work-title"><a href="https://care.com/" target="_blank" rel="noopener noreferrer">Care.com</a> <span class="work-role">Principal PM</span></span>
+                  <span class="work-outcome">27M seekers, six marketplaces</span>
+                </span>
+                <span class="work-meta">May 2024–present</span>
+              </summary>
+              <div class="work-body">
+                <p>Current: Principal PM, Consumer Growth. Previously Product Lead, Business Growth (Daycares, Senior Assisted Living, Camps &amp; Activities).</p>
+                <p>Focus: product strategy, supply growth, demand growth, conversion, activation.</p>
+                <p>Consumer growth: 27M+ seekers, 650k+ providers, across six marketplaces (childcare, senior care, adult care, pet care, housekeeping, tutoring).</p>
+                <p>Business growth: 3M+ customers, 10k+ businesses.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>
+                <span class="caret" aria-hidden="true"></span>
+                <span class="work-main">
+                  <span class="work-title"><a href="https://gloco.ai/" target="_blank" rel="noopener noreferrer">Gloco.ai</a> <span class="work-role">Sr. Technical PM</span></span>
+                  <span class="work-outcome">First PM · $2.2m ARR</span>
+                </span>
+                <span class="work-meta">Apr 2022–Sep 2023</span>
+              </summary>
+              <div class="work-body">
+                <p>First PM hire at a scale-up. Unblocked order throughput, then built an AI-first regulatory compliance product for global sellers after ChatGPT launched.</p>
+                <ul>
+<li>Helped Flatfee raise $1.3m for marketing and product/eng.</li>
+<li>Core product engine for 5,000 enterprise customers and $2.2m annual revenue.</li>
+<li>820 new enterprise customers, 20% lower CAC, $300k direct revenue.</li>
+<li>15% revenue lift from an AI support tool.</li>
+<li>Owned the core marketplace and fulfillment portal (~$150k monthly order volume).</li>
+<li>Stripe and Kangxin API integrations; China trademark partnership with <a href="https://en.kangxin.com/" target="_blank" rel="noopener noreferrer">Kangxin</a>.</li>
+</ul>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>
+                <span class="caret" aria-hidden="true"></span>
+                <span class="work-main">
+                  <span class="work-title"><a href="https://deliverend.com/" target="_blank" rel="noopener noreferrer">Deliverend</a> <span class="work-role">Head of Product, co-founder</span></span>
+                  <span class="work-outcome">100k deliveries · $2.2m raised</span>
+                </span>
+                <span class="work-meta">Aug 2019–Apr 2022</span>
+              </summary>
+              <div class="work-body">
+                <p>Co-founded the Uber of logistics. B2C: deliveries and escrow between Facebook Marketplace buyers and sellers. B2B: a vertically scalable fleet for brick-and-mortar.</p>
+                <p>Raised $2.2m, 100k deliveries, 1.5k drivers in 4 cities. Built B2C and B2B 0–1 (web + two mobile apps) and the data pipelines.</p>
+                <p>Press: <a href="https://finance.yahoo.com/news/small-businesses-turn-deliverend-keep-130000570.html" target="_blank" rel="noopener noreferrer">Yahoo Finance</a>, <a href="https://www.wishtv.com/lifestyle/lifestylelive/deliverend-brings-hope-to-businesses-gig-workers-with-service-offering-safe-cost-effective-deliveries/" target="_blank" rel="noopener noreferrer">Wish-TV</a>, <a href="https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/" target="_blank" rel="noopener noreferrer">TechPoint</a>.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>
+                <span class="caret" aria-hidden="true"></span>
+                <span class="work-main">
+                  <span class="work-title"><a href="https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/" target="_blank" rel="noopener noreferrer">Aggressively Organic</a> <span class="work-role">Head of Product, co-founder</span></span>
+                  <span class="work-outcome">100k+ customers · $2.5m revenue</span>
+                </span>
+                <span class="work-meta">May 2017–Nov 2019</span>
+              </summary>
+              <div class="work-body">
+                <p>Co-founded a single-pod hydroponic grower to cut food insecurity and brittle supply chains. Fast Company called it a world-changing idea.</p>
+                <p>Built 0–1, filed patents, sold 200k+ pods to families and 300k+ to indoor vertical farms. Friends-and-family raise of $200k; $2.5m+ revenue in 2018.</p>
+                <ul>
+<li>Press: <a href="https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen" target="_blank" rel="noopener noreferrer">Fast Company</a>, <a href="https://www.wishtv.com/news/indiana-based-company-to-help-consumers-declare-food-independence/" target="_blank" rel="noopener noreferrer">WISH-TV</a>, <a href="https://www.youtube.com/watch?v=BvnOAIYDDC4" target="_blank" rel="noopener noreferrer">Forbes / Ag conference</a>, <a href="https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/" target="_blank" rel="noopener noreferrer">IndyStar</a>.</li>
+<li>$2.5m revenue, 100,000+ customers.</li>
+<li><a href="https://foodandcity.org/projects/challenge/previous-winners/" target="_blank" rel="noopener noreferrer">SXSW Food+City</a> prize and People’s Choice, 2018.</li>
+<li>Licensed patent-pending tech to 10+ farming companies.</li>
+</ul>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </section>
+
+      <section class="space-y-4" aria-labelledby="education-heading">
+        <h2 id="education-heading">Education</h2>
+        <ul class="flex flex-col gap-4 list-none p-0 m-0">
+          <li class="flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4">
+            <div class="flex items-baseline gap-2 flex-wrap">
+              <span>Master's in Data Science, Indiana University</span>
+              <span class="text-sm text-[#1a180f]/30 dark:text-[#ece9e3]/30 flex-shrink-0">2017–2019</span>
+            </div>
+            <span class="text-sm text-[#1a180f]/60 dark:text-[#ece9e3]/60 md:text-right flex-shrink-0">Applied Data Science + ML</span>
+          </li>
+          <li class="flex flex-col md:flex-row md:items-baseline md:justify-between md:gap-4">
+            <span>Bachelor's in Psychology, Minor in Math, Indiana University</span>
+            <span class="text-sm text-[#1a180f]/60 dark:text-[#ece9e3]/60 md:text-right flex-shrink-0">2012–2016</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="page mt-auto mx-auto py-8 flex flex-col items-center gap-8">
+    <div class="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-8 w-full">
+      <ul class="flex flex-row items-center list-none mx-auto md:ml-auto gap-4 p-0 m-0">
+        <li class="flex">
+          <a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://x.com/balanidiv">X</a>
+        </li>
+        <li class="flex">
+          <a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://www.linkedin.com/in/balanidiv">LinkedIn</a>
+        </li>
+        <li class="flex">
+          <a class="transition text-xs py-2 opacity-60 hover:opacity-100" href="mailto:divyambalani@gmail.com">Email</a>
+        </li>
+      </ul>
+    </div>
+    <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Theme: system" class="group inline-flex cursor-pointer bg-transparent border-0 p-0">
+      <svg aria-hidden="true" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="theme-star h-8 w-auto opacity-20 transition-opacity group-hover:opacity-40 text-[#1a180f] dark:text-[#ece9e3]">
+        <path fill="currentColor" d="M15.25 3h1.5l.35 9.35 6.65-6.65 1.06 1.06-6.65 6.65L27 14.25v1.5l-9.35.35 6.65 6.65-1.06 1.06-6.65-6.65-.35 9.35h-1.5l-.35-9.35-6.65 6.65-1.06-1.06 6.65-6.65L5 15.75v-1.5l9.35-.35-6.65-6.65 1.06-1.06 6.65 6.65L15.25 3z"/>
+      </svg>
+    </button>
+  </footer>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("theme-toggle");
+      if (!btn) return;
+      const label = () => {
+        const pref = window.__getTheme ? window.__getTheme() : "system";
+        btn.setAttribute("aria-label", "Toggle theme (currently " + pref + ")");
+        btn.setAttribute("title", "Theme: " + pref);
+      };
+      label();
+      btn.addEventListener("click", function () {
+        if (window.__cycleTheme) window.__cycleTheme();
+        label();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+{
+  "pulled_at": "2026-08-23T04:20:00Z",
+  "pulled_at_ct": "2026-08-22 11:20 PM CT",
+  "pulled_via": "Notion MCP (user-Notion: notion-search, notion-fetch, notion-query-data-sources)",
+  "note": "Preview only. Not live. Title stays Principal PM. Logo-row is SITE-8 and is not regenerated from this file.",
+  "sources": {
+    "home": {
+      "title": "HOME",
+      "url": "https://app.notion.com/p/30f45e37a6c3413bb4276290b6021acc",
+      "maps_to": "Workspace root. Parent of Homepage and Posts. Not rendered directly."
+    },
+    "homepage": {
+      "title": "divy.am Homepage",
+      "url": "https://app.notion.com/p/3c5635ae428881c49643c4d8c1630f1f",
+      "maps_to": "Intro paragraphs, Education list, Tools note (logo-row is SITE-8, not overwritten)."
+    },
+    "work_page": {
+      "title": "Div’s Work",
+      "url": "https://app.notion.com/p/28b635ae428880ae9a82f68e329d9704",
+      "maps_to": "Work section container."
+    },
+    "work_db": {
+      "title": "Div’s Work inline DB",
+      "url": "https://app.notion.com/p/28b635ae42888082ab01c925be084c98",
+      "collection": "collection://28b635ae-4288-80ea-b04b-000b17320bed",
+      "maps_to": "Expandable work rows (Care.com, Gloco.ai, Deliverend, Aggressively Organic)."
+    },
+    "posts_db": {
+      "title": "divy.am Posts",
+      "url": "https://app.notion.com/p/584f9cce43ae4bfb97eaae5a852a6da3",
+      "collection": "collection://afbb4021-1278-4120-b69e-fceca046cac5",
+      "maps_to": "Writing section. Only rows with Published checked. Hello draft is unpublished and excluded."
+    }
+  },
+  "intro": [
+    {
+      "html": "I'm Div. I'm a Principal PM at\n            <a href=\"https://care.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Care.com</a>\n            in Austin — consumer growth across six care marketplaces, after building the Camps &amp; Activities vertical 0–1."
+    },
+    {
+      "html": "Before that I was first PM at\n            <a href=\"https://gloco.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">Gloco.ai</a>,\n            and I co-founded\n            <a href=\"https://deliverend.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Deliverend</a>\n            and <a href=\"https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Aggressively Organic</a> (100k+ orders)."
+    },
+    {
+      "html": "People always tell me that psychology and math are two ends of the spectrum. To me they are closer than ever."
+    }
+  ],
+  "tools_note": [
+    "Figma",
+    "Cursor",
+    "Claude",
+    "Spotify",
+    "Hermes (Nous)",
+    "Granola",
+    "Slack"
+  ],
+  "education": [
+    {
+      "label": "Master's in Data Science, Indiana University",
+      "years": "2017–2019",
+      "detail": "Applied Data Science + ML"
+    },
+    {
+      "label": "Bachelor's in Psychology, Minor in Math, Indiana University",
+      "years": "2012–2016",
+      "detail": ""
+    }
+  ],
+  "work": [
+    {
+      "name": "Care.com",
+      "url": "https://care.com/",
+      "notion_url": "https://app.notion.com/p/28b635ae428880ab9c27d6db4fcb9d5d",
+      "notion_title": "Sr PM → Product Lead → Principal PM",
+      "display_role": "Principal PM",
+      "outcome": "27M seekers, six marketplaces",
+      "dates": "May 2024–present",
+      "date_start": "2024-05-20",
+      "date_end": null,
+      "location": "Austin, TX (Hybrid)",
+      "roles": [
+        "Product",
+        "Product Marketing",
+        "Growth"
+      ],
+      "notes": "Omitted Notion placeholders 'XXX Million Dollar Business' and 'XX Million dollar business' — not real metrics.",
+      "body": [
+        {
+          "type": "p",
+          "html": "Current: Principal PM, Consumer Growth. Previously Product Lead, Business Growth (Daycares, Senior Assisted Living, Camps &amp; Activities)."
+        },
+        {
+          "type": "p",
+          "html": "Focus: product strategy, supply growth, demand growth, conversion, activation."
+        },
+        {
+          "type": "p",
+          "html": "Consumer growth: 27M+ seekers, 650k+ providers, across six marketplaces (childcare, senior care, adult care, pet care, housekeeping, tutoring)."
+        },
+        {
+          "type": "p",
+          "html": "Business growth: 3M+ customers, 10k+ businesses."
+        }
+      ]
+    },
+    {
+      "name": "Gloco.ai",
+      "url": "https://gloco.ai/",
+      "notion_url": "https://app.notion.com/p/28b635ae428880a38388fc5419056d4e",
+      "notion_title": "Sr. Technical PM",
+      "display_role": "Sr. Technical PM",
+      "outcome": "First PM · $2.2m ARR",
+      "dates": "Apr 2022–Sep 2023",
+      "date_start": "2022-04-12",
+      "date_end": "2023-09-13",
+      "location": "Austin, TX (Remote)",
+      "roles": [
+        "Product",
+        "Growth"
+      ],
+      "body": [
+        {
+          "type": "p",
+          "html": "First PM hire at a scale-up. Unblocked order throughput, then built an AI-first regulatory compliance product for global sellers after ChatGPT launched."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Helped Flatfee raise $1.3m for marketing and product/eng.",
+            "Core product engine for 5,000 enterprise customers and $2.2m annual revenue.",
+            "820 new enterprise customers, 20% lower CAC, $300k direct revenue.",
+            "15% revenue lift from an AI support tool.",
+            "Owned the core marketplace and fulfillment portal (~$150k monthly order volume).",
+            "Stripe and Kangxin API integrations; China trademark partnership with <a href=\"https://en.kangxin.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Kangxin</a>."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deliverend",
+      "url": "https://deliverend.com/",
+      "notion_url": "https://app.notion.com/p/28b635ae42888007b583ccdabdb0e630",
+      "notion_title": "Head of Product",
+      "display_role": "Head of Product, co-founder",
+      "outcome": "100k deliveries · $2.2m raised",
+      "dates": "Aug 2019–Apr 2022",
+      "date_start": "2019-08-05",
+      "date_end": "2022-04-10",
+      "location": "Indianapolis, IN (On-site)",
+      "roles": [
+        "Product",
+        "Growth",
+        "Data Engineering",
+        "Business Analysis",
+        "Co-Founder"
+      ],
+      "body": [
+        {
+          "type": "p",
+          "html": "Co-founded the Uber of logistics. B2C: deliveries and escrow between Facebook Marketplace buyers and sellers. B2B: a vertically scalable fleet for brick-and-mortar."
+        },
+        {
+          "type": "p",
+          "html": "Raised $2.2m, 100k deliveries, 1.5k drivers in 4 cities. Built B2C and B2B 0–1 (web + two mobile apps) and the data pipelines."
+        },
+        {
+          "type": "p",
+          "html": "Press: <a href=\"https://finance.yahoo.com/news/small-businesses-turn-deliverend-keep-130000570.html\" target=\"_blank\" rel=\"noopener noreferrer\">Yahoo Finance</a>, <a href=\"https://www.wishtv.com/lifestyle/lifestylelive/deliverend-brings-hope-to-businesses-gig-workers-with-service-offering-safe-cost-effective-deliveries/\" target=\"_blank\" rel=\"noopener noreferrer\">Wish-TV</a>, <a href=\"https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/\" target=\"_blank\" rel=\"noopener noreferrer\">TechPoint</a>."
+        }
+      ]
+    },
+    {
+      "name": "Aggressively Organic",
+      "url": "https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/",
+      "notion_url": "https://app.notion.com/p/28b635ae42888041a772f067488b9e40",
+      "notion_title": "Head of Product",
+      "display_role": "Head of Product, co-founder",
+      "outcome": "100k+ customers · $2.5m revenue",
+      "dates": "May 2017–Nov 2019",
+      "date_start": "2017-05-01",
+      "date_end": "2019-11-17",
+      "location": "Indianapolis, IN (On-site)",
+      "roles": [
+        "Product",
+        "Product Marketing",
+        "Growth",
+        "Data Engineering",
+        "Business Analysis",
+        "Co-Founder"
+      ],
+      "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City.",
+      "body": [
+        {
+          "type": "p",
+          "html": "Co-founded a single-pod hydroponic grower to cut food insecurity and brittle supply chains. Fast Company called it a world-changing idea."
+        },
+        {
+          "type": "p",
+          "html": "Built 0–1, filed patents, sold 200k+ pods to families and 300k+ to indoor vertical farms. Friends-and-family raise of $200k; $2.5m+ revenue in 2018."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Press: <a href=\"https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen\" target=\"_blank\" rel=\"noopener noreferrer\">Fast Company</a>, <a href=\"https://www.wishtv.com/news/indiana-based-company-to-help-consumers-declare-food-independence/\" target=\"_blank\" rel=\"noopener noreferrer\">WISH-TV</a>, <a href=\"https://www.youtube.com/watch?v=BvnOAIYDDC4\" target=\"_blank\" rel=\"noopener noreferrer\">Forbes / Ag conference</a>, <a href=\"https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/\" target=\"_blank\" rel=\"noopener noreferrer\">IndyStar</a>.",
+            "$2.5m revenue, 100,000+ customers.",
+            "<a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">SXSW Food+City</a> prize and People’s Choice, 2018.",
+            "Licensed patent-pending tech to 10+ farming companies."
+          ]
+        }
+      ]
+    }
+  ],
+  "posts_published": [],
+  "posts_excluded": [
+    {
+      "title": "Hello",
+      "slug": "hello",
+      "summary": "A draft so you can see the shape of a post.",
+      "date": "2026-08-16",
+      "published": false,
+      "url": "https://app.notion.com/p/3be635ae4288810f871fd9122756416a",
+      "reason": "Published is unchecked. Must not appear on the site."
+    }
+  ]
+}

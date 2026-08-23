@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Div Balani · Principal PM · option C</title>
+  <meta name="description" content="Principal PM at Care.com. Marketplace product. Two-time founder. Austin." />
+  <meta property="og:title" content="Div Balani · Principal PM" />
+  <meta property="og:description" content="Principal PM at Care.com. Marketplace product. Two-time founder. Austin." />
+  <meta name="theme-color" content="#fdfcfb" />
+  <link rel="canonical" href="/" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Divyam Balani",
+    "alternateName": "Div Balani",
+    "url": "https://divy.am/",
+    "jobTitle": "Principal Product Manager",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Care.com",
+      "url": "https://www.care.com/"
+    },
+    "homeLocation": {
+      "@type": "Place",
+      "name": "Austin, TX",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      }
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Indiana University"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/balanidiv",
+      "https://x.com/balanidiv",
+      "https://github.com/balanidiv"
+    ]
+  }
+  </script>
+  <script>
+    (function () {
+      try {
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const getStored = () => localStorage.getItem("theme");
+        const resolve = () => {
+          const pref = getStored();
+          if (pref === "light" || pref === "dark") return pref;
+          return media.matches ? "dark" : "light";
+        };
+        const apply = () => {
+          const mode = resolve();
+          document.documentElement.classList.toggle("dark", mode === "dark");
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", mode === "dark" ? "#161513" : "#fdfcfb");
+        };
+        if (!getStored()) localStorage.setItem("theme", "system");
+        apply();
+        media.addEventListener("change", apply);
+        window.__setTheme = (pref) => {
+          localStorage.setItem("theme", pref);
+          apply();
+        };
+        window.__getTheme = () => getStored() || "system";
+        window.__getResolvedTheme = () => resolve();
+        window.__cycleTheme = () => {
+          const order = ["system", "light", "dark"];
+          const current = window.__getTheme();
+          const next = order[(order.indexOf(current) + 1) % order.length];
+          window.__setTheme(next);
+          return next;
+        };
+      } catch (_) {
+        /* no-op */
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["New York", "ui-serif", "Iowan Old Style", "Palatino", "Palatino Linotype", "Georgia", "serif"],
+            serif: ["New York", "ui-serif", "Iowan Old Style", "Palatino", "Palatino Linotype", "Georgia", "serif"],
+            mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="min-h-dvh flex flex-col gap-8 py-4 md:py-8 items-start bg-[#fdfcfb] dark:bg-[#161513] text-[#1a180f]/80 dark:text-[#ece9e3]/95 leading-relaxed antialiased">
+  <div class="flex-1 w-full">
+    <main class="page mx-auto pt-12 md:pt-20 space-y-6">
+      <img src="./assets/div-portrait.jpg" alt="Divyam Balani" class="face" width="72" height="72" />
+      <h1>Divyam Balani</h1>
+      <p>I'm Div. I'm a Principal PM at <a href="https://care.com/">Care.com</a> in Austin. I work on marketplace growth — supply, conversion, and new lines of business. I built Camps &amp; Activities 0–1; I now lead consumer growth across six care marketplaces (27M seekers).</p>
+      <p>Before Care.com I was the first PM at <a href="https://gloco.ai/">Gloco.ai</a> ($2.2m ARR). I co-founded <a href="https://deliverend.com/">Deliverend</a> (100k deliveries) and <a href="https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/">Aggressively Organic</a> (100k+ orders, SXSW Food+City).</p>
+      <p>People always tell me that psychology and math are two ends of the spectrum. To me they are closer than ever.</p>
+<p class="text-xs opacity-40" style="margin-top:2rem">Preview option — not live.</p>
+    </main>
+  </div>
+
+  <footer class="page mt-auto mx-auto py-8 flex flex-col items-center gap-8">
+    <ul class="flex flex-row items-center list-none mx-auto gap-4 p-0 m-0">
+      <li><a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://x.com/balanidiv">X</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" class="transition text-xs py-2 opacity-60 hover:opacity-100" href="https://www.linkedin.com/in/balanidiv">LinkedIn</a></li>
+      <li><a class="transition text-xs py-2 opacity-60 hover:opacity-100" href="mailto:divyambalani@gmail.com">Email</a></li>
+    </ul>
+    <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Theme: system" class="group inline-flex cursor-pointer bg-transparent border-0 p-0">
+      <svg aria-hidden="true" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="theme-star h-8 w-auto opacity-20 transition-opacity group-hover:opacity-40 text-[#1a180f] dark:text-[#ece9e3]">
+        <path fill="currentColor" d="M15.25 3h1.5l.35 9.35 6.65-6.65 1.06 1.06-6.65 6.65L27 14.25v1.5l-9.35.35 6.65 6.65-1.06 1.06-6.65-6.65-.35 9.35h-1.5l-.35-9.35-6.65 6.65-1.06-1.06 6.65-6.65L5 15.75v-1.5l9.35-.35-6.65-6.65 1.06-1.06 6.65 6.65L15.25 3z"/>
+      </svg>
+    </button>
+  </footer>
+  <script>
+    (function () {
+      const btn = document.getElementById("theme-toggle");
+      if (!btn) return;
+      const label = () => {
+        const pref = window.__getTheme ? window.__getTheme() : "system";
+        btn.setAttribute("aria-label", "Toggle theme (currently " + pref + ")");
+        btn.setAttribute("title", "Theme: " + pref);
+      };
+      label();
+      btn.addEventListener("click", function () {
+        if (window.__cycleTheme) window.__cycleTheme();
+        label();
+      });
+    })();
+  </script>
+</body>
+</html>
