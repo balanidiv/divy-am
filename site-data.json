@@ -1,8 +1,8 @@
 {
-  "pulled_at": "2026-08-23T04:20:00Z",
-  "pulled_at_ct": "2026-08-22 11:20 PM CT",
-  "pulled_via": "Notion MCP (user-Notion: notion-search, notion-fetch, notion-query-data-sources)",
-  "note": "Preview only. Not live. Title stays Principal PM. Logo-row is SITE-8 and is not regenerated from this file.",
+  "pulled_at": "2026-08-23T19:39:06Z",
+  "pulled_at_ct": "2026-08-23 2:39 PM CT",
+  "pulled_via": "GitHub Action + Notion API",
+  "note": "Live on Railway (https://divy.am/). Tab title is Div Balani. Logo-row is SITE-8 and is not regenerated from this file.",
   "sources": {
     "home": {
       "title": "HOME",
@@ -34,10 +34,10 @@
   },
   "intro": [
     {
-      "html": "I'm Div. I'm a Principal PM at\n            <a href=\"https://care.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Care.com</a>\n            in Austin — consumer growth across six care marketplaces, after building the Camps &amp; Activities vertical 0–1."
+      "html": "Hey I’m Div. I&#x27;m a Principal PM at <a href=\"https://care.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Care.com</a> in Austin — consumer growth across six care marketplaces, after building the Camps &amp; Activities vertical 0–1."
     },
     {
-      "html": "Before that I was first PM at\n            <a href=\"https://gloco.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">Gloco.ai</a>,\n            and I co-founded\n            <a href=\"https://deliverend.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Deliverend</a>\n            and <a href=\"https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Aggressively Organic</a> (100k+ orders)."
+      "html": "Before that I was first PM at <a href=\"https://gloco.ai/\" target=\"_blank\" rel=\"noopener noreferrer\">Gloco.ai</a>, and I co-founded <a href=\"https://deliverend.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Deliverend</a> and <a href=\"https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Aggressively Organic</a> (100k+ orders)."
     },
     {
       "html": "People always tell me that psychology and math are two ends of the spectrum. To me they are closer than ever."
@@ -54,17 +54,66 @@
   ],
   "education": [
     {
-      "label": "Master's in Data Science, Indiana University",
+      "label": "Master's in Data Science, Indiana University —",
       "years": "2017–2019",
       "detail": "Applied Data Science + ML"
     },
     {
-      "label": "Bachelor's in Psychology, Minor in Math, Indiana University",
+      "label": "Bachelor's in Psychology, Minor in Math, Indiana University —",
       "years": "2012–2016",
       "detail": ""
     }
   ],
   "work": [
+    {
+      "name": "Aggressively Organic",
+      "url": "https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/",
+      "notion_url": "https://app.notion.com/p/28b635ae42888041a772f067488b9e40",
+      "notion_title": "Head of Product",
+      "display_role": "Head of Product, co-founder",
+      "outcome": "100k+ customers · $2.5m revenue",
+      "dates": "May 2017–Nov 2019",
+      "date_start": "2017-05-01",
+      "date_end": "2019-11-17",
+      "location": "Indianapolis, IN (On-site)",
+      "roles": [
+        "Product",
+        "Product Marketing",
+        "Growth",
+        "Data Engineering",
+        "Business Analysis",
+        "Co-Founder"
+      ],
+      "body": [
+        {
+          "type": "p",
+          "html": "Co-founded the single-pod hydroponic growth pod to end food insecurity, and reduce reliance on brittle supply chains. Fast Company called us one of the world-changing ideas."
+        },
+        {
+          "type": "p",
+          "html": "Built the product 0-1 with a visionary co-founder, filed patents, built the infra, sold 200k+ pods to individual families, and 300k+ pods to indoor vertical farms including the cannabis industry."
+        },
+        {
+          "type": "p",
+          "html": "Raised 200k through friends &amp; family, revenue did upwards of $2.5M+ in 2018, learned a lot, failed a lot, had a lot of fun."
+        },
+        {
+          "type": "p",
+          "html": "Some stats:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Featured in <a href=\"https://www.youtube.com/watch?v=BvnOAIYDDC4\" target=\"_blank\" rel=\"noopener noreferrer\">Forbes</a>, <a href=\"https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen\" target=\"_blank\" rel=\"noopener noreferrer\">Fast Company</a>, <a href=\"https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/\" target=\"_blank\" rel=\"noopener noreferrer\">IndyStar</a> and many other outlets",
+            "$2.5m in revenue",
+            "100,000+ customers",
+            "<a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">Won SXSW’s “Food and City” award,</a> and <a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">People’s Choice Awards</a>",
+            "Licensed patent-pending technology to 10+ farming companies in multiple states"
+          ]
+        }
+      ],
+      "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City."
+    },
     {
       "name": "Care.com",
       "url": "https://care.com/",
@@ -81,25 +130,53 @@
         "Product Marketing",
         "Growth"
       ],
-      "notes": "Omitted Notion placeholders 'XXX Million Dollar Business' and 'XX Million dollar business' — not real metrics.",
       "body": [
         {
           "type": "p",
-          "html": "Current: Principal PM, Consumer Growth. Previously Product Lead, Business Growth (Daycares, Senior Assisted Living, Camps &amp; Activities)."
+          "html": "Current - Principal PM - Consumer Growth"
         },
         {
           "type": "p",
-          "html": "Focus: product strategy, supply growth, demand growth, conversion, activation."
+          "html": "Previous - Product Lead - Business Growth (Daycares, Senior Assisted Living Facilities, Camps &amp; Activities)"
         },
         {
           "type": "p",
-          "html": "Consumer growth: 27M+ seekers, 650k+ providers, across six marketplaces (childcare, senior care, adult care, pet care, housekeeping, tutoring)."
+          "html": "Main areas of focus:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Product Strategy + Development",
+            "Supply growth",
+            "Demand growth",
+            "Conversion",
+            "Activation"
+          ]
         },
         {
           "type": "p",
-          "html": "Business growth: 3M+ customers, 10k+ businesses."
+          "html": "Consumer Growth Scale:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "27M+ seekers",
+            "650k+ providers"
+          ]
+        },
+        {
+          "type": "p",
+          "html": "Business Growth Scale:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "3M+ customers",
+            "10k+ businesses"
+          ]
         }
-      ]
+      ],
+      "notes": "Omitted Notion placeholders 'XXX Million Dollar Business' and 'XX Million dollar business' — not real metrics."
     },
     {
       "name": "Gloco.ai",
@@ -119,17 +196,26 @@
       "body": [
         {
           "type": "p",
-          "html": "First PM hire at a scale-up. Unblocked order throughput, then built an AI-first regulatory compliance product for global sellers after ChatGPT launched."
+          "html": "Joined a scale up. First PM hire. Unblocked order throughput through various optimizations, increased activations &amp; conversion."
+        },
+        {
+          "type": "p",
+          "html": "ChatGPT released in late 2022, and we got to work on building an AI first regulatory compliance solution for Global Sellers. We took information about your business, where you want to expand to, and told you how to stay in compliance, all for a flat-fee."
+        },
+        {
+          "type": "p",
+          "html": "Some stats:"
         },
         {
           "type": "ul",
           "items": [
-            "Helped Flatfee raise $1.3m for marketing and product/eng.",
-            "Core product engine for 5,000 enterprise customers and $2.2m annual revenue.",
-            "820 new enterprise customers, 20% lower CAC, $300k direct revenue.",
-            "15% revenue lift from an AI support tool.",
-            "Owned the core marketplace and fulfillment portal (~$150k monthly order volume).",
-            "Stripe and Kangxin API integrations; China trademark partnership with <a href=\"https://en.kangxin.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Kangxin</a>."
+            "Was instrumental in Flatfee securing $1.3m in VC funding for Marketing &amp; Product/Eng team expansion.",
+            "Led the development of the core product engine responsible for supporting 5,000 enterprise customers, and over $2.2m in annual rev.",
+            "Streamlined processes, team rituals, and release cadences driving, 820 new enterprise customers, reducing CAC by 20% and generating $300,000 in direct revenue as well.",
+            "Generated 15% increase in revenue by creating and implementing a new AI-based tool for customer support teams to respond to tickets faster.",
+            "Owned product responsibility for the Core Marketplace as well as the Fulfillment Portal, which is a part of the Flatfee software ecosystem and intrinsic to the company being able to fulfill over $150,000 of\norder volume on a recurring monthly basis.",
+            "Led the API integration team, launching successful deep integrations with Stripe and Kangxin.",
+            "Led the strategy for channel partnerships, forming a successful partnership with <a href=\"https://en.kangxin.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Kangxin</a>, which is a prominent leader in trademark applications in China."
           ]
         }
       ]
@@ -155,55 +241,31 @@
       "body": [
         {
           "type": "p",
-          "html": "Co-founded the Uber of logistics. B2C: deliveries and escrow between Facebook Marketplace buyers and sellers. B2B: a vertically scalable fleet for brick-and-mortar."
+          "html": "Co-founded the Uber of logisitics."
         },
         {
           "type": "p",
-          "html": "Raised $2.2m, 100k deliveries, 1.5k drivers in 4 cities. Built B2C and B2B 0–1 (web + two mobile apps) and the data pipelines."
+          "html": "B2C - facilitating deliveries and transactions (escrow) between buyers and sellers on Facebook Marketplace.\nB2B - giving a vertically scalable fleet to brick-and-mortar businesses."
         },
         {
           "type": "p",
-          "html": "Press: <a href=\"https://finance.yahoo.com/news/small-businesses-turn-deliverend-keep-130000570.html\" target=\"_blank\" rel=\"noopener noreferrer\">Yahoo Finance</a>, <a href=\"https://www.wishtv.com/lifestyle/lifestylelive/deliverend-brings-hope-to-businesses-gig-workers-with-service-offering-safe-cost-effective-deliveries/\" target=\"_blank\" rel=\"noopener noreferrer\">Wish-TV</a>, <a href=\"https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/\" target=\"_blank\" rel=\"noopener noreferrer\">TechPoint</a>."
-        }
-      ]
-    },
-    {
-      "name": "Aggressively Organic",
-      "url": "https://web.archive.org/web/20180808010554/http://aggressivelyorganic.com/",
-      "notion_url": "https://app.notion.com/p/28b635ae42888041a772f067488b9e40",
-      "notion_title": "Head of Product",
-      "display_role": "Head of Product, co-founder",
-      "outcome": "100k+ customers · $2.5m revenue",
-      "dates": "May 2017–Nov 2019",
-      "date_start": "2017-05-01",
-      "date_end": "2019-11-17",
-      "location": "Indianapolis, IN (On-site)",
-      "roles": [
-        "Product",
-        "Product Marketing",
-        "Growth",
-        "Data Engineering",
-        "Business Analysis",
-        "Co-Founder"
-      ],
-      "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City.",
-      "body": [
-        {
-          "type": "p",
-          "html": "Co-founded a single-pod hydroponic grower to cut food insecurity and brittle supply chains. Fast Company called it a world-changing idea."
+          "html": "Raised <a href=\"https://www.kidventurecapital.com/wereinvestedin\" target=\"_blank\" rel=\"noopener noreferrer\">2.2M</a>, did 100k deliveries, increased the network of drivers to 1.5k drivers in 4 cities.\nBuilt the B2C and the B2B product 0-1 (web app + 2 mobile apps), built data pipelines, grew the business, learned a lot."
         },
         {
           "type": "p",
-          "html": "Built 0–1, filed patents, sold 200k+ pods to families and 300k+ to indoor vertical farms. Friends-and-family raise of $200k; $2.5m+ revenue in 2018."
+          "html": "Some press:"
         },
         {
-          "type": "ul",
-          "items": [
-            "Press: <a href=\"https://www.fastcompany.com/40588394/these-low-tech-indoor-gardens-bring-vegetables-to-your-kitchen\" target=\"_blank\" rel=\"noopener noreferrer\">Fast Company</a>, <a href=\"https://www.wishtv.com/news/indiana-based-company-to-help-consumers-declare-food-independence/\" target=\"_blank\" rel=\"noopener noreferrer\">WISH-TV</a>, <a href=\"https://www.youtube.com/watch?v=BvnOAIYDDC4\" target=\"_blank\" rel=\"noopener noreferrer\">Forbes / Ag conference</a>, <a href=\"https://www.indystar.com/picture-gallery/news/2018/04/04/this-veggie-farm-fits-in-your-apartment/33559575/\" target=\"_blank\" rel=\"noopener noreferrer\">IndyStar</a>.",
-            "$2.5m revenue, 100,000+ customers.",
-            "<a href=\"https://foodandcity.org/projects/challenge/previous-winners/\" target=\"_blank\" rel=\"noopener noreferrer\">SXSW Food+City</a> prize and People’s Choice, 2018.",
-            "Licensed patent-pending tech to 10+ farming companies."
-          ]
+          "type": "p",
+          "html": "<a href=\"https://finance.yahoo.com/news/small-businesses-turn-deliverend-keep-130000570.html?guccounter=1\" target=\"_blank\" rel=\"noopener noreferrer\">https://finance.yahoo.com/news/small-businesses-turn-deliverend-keep-130000570.html?guccounter=1</a>"
+        },
+        {
+          "type": "p",
+          "html": "<a href=\"https://www.wishtv.com/lifestyle/lifestylelive/deliverend-brings-hope-to-businesses-gig-workers-with-service-offering-safe-cost-effective-deliveries/\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.wishtv.com/lifestyle/lifestylelive/deliverend-brings-hope-to-businesses-gig-workers-with-service-offering-safe-cost-effective-deliveries/</a>"
+        },
+        {
+          "type": "p",
+          "html": "<a href=\"https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/\" target=\"_blank\" rel=\"noopener noreferrer\">https://techpoint.org/deliverends-founder-nick-turner-is-here-to-help/</a>"
         }
       ]
     }
