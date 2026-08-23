@@ -231,7 +231,7 @@ def main() -> int:
         raise SystemExit("social-row must stay above the intro")
     if "My Toolbox" not in html or "toolbox-heading" not in html:
         raise SystemExit("My Toolbox heading missing after rebuild")
-    if "chrome-critical" not in html or "styles.css?v=23" not in html:
+    if "chrome-critical" not in html or "styles.css?v=23b" not in html:
         raise SystemExit("critical chrome CSS / cache-bust missing after rebuild")
     if "1cUJ8cGwihEbyEVqy46okNAMeiOpWa98U" not in html:
         raise SystemExit("Drive resume href missing after rebuild")
