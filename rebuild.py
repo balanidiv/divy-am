@@ -225,9 +225,9 @@ def main() -> int:
         raise SystemExit("sun/moon theme icons missing after rebuild")
     if html.find("div-portrait.jpg") > html.find('id="theme-toggle"'):
         raise SystemExit("toggle must sit to the right of the portrait on the same line")
-    if html.find("<h1") > html.find('class="social-row"'):
+    if html.find("<h1") > html.find('class="social-row'):
         raise SystemExit("social-row must sit on the same line as the name")
-    if html.find('class="social-row"') > html.find('class="space-y-3"'):
+    if html.find('class="social-row') > html.find('class="space-y-3"'):
         raise SystemExit("social-row must stay above the intro")
     if "My Toolbox" not in html or "toolbox-heading" not in html:
         raise SystemExit("My Toolbox heading missing after rebuild")
