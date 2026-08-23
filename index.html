@@ -10,7 +10,19 @@
   <meta name="theme-color" content="#fdfcfb" />
   <link rel="canonical" href="/" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=23" />
+  <style id="chrome-critical">
+    .hero-ident{display:flex;align-items:center;justify-content:space-between;width:100%}
+    .hero-name-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;width:100%}
+    .social-row{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-end;list-style:none;gap:1rem;padding:0;margin:0 0 0 auto}
+    .social-row a{font-size:.75rem;line-height:1;padding:.25rem 0;opacity:.6;text-decoration:none;color:inherit}
+    .theme-icon{height:1.5rem;width:1.5rem;opacity:.22;color:#1a180f}
+    html.dark .theme-icon{color:#ece9e3}
+    .theme-icon-sun{display:block}
+    .theme-icon-moon{display:none}
+    html.dark .theme-icon-sun{display:none}
+    html.dark .theme-icon-moon{display:block}
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -102,21 +114,21 @@
   <div class="flex-1 w-full">
     <main class="page mx-auto pt-4 md:pt-8 space-y-12">
       <div class="space-y-4">
-        <div class="hero-ident">
+        <div class="hero-ident flex items-center justify-between w-full">
           <img src="./assets/div-portrait.jpg" alt="Divyam Balani" class="face" width="72" height="72" />
           <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Theme: system" class="theme-toggle-chrome group inline-flex cursor-pointer bg-transparent border-0 p-0">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-sun">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-sun block dark:hidden h-6 w-6">
               <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
               <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M12 3v1.6M12 19.4V21M4.93 4.93l1.13 1.13M17.94 17.94l1.13 1.13M3 12h1.6M19.4 12H21M4.93 19.07l1.13-1.13M17.94 6.06l1.13-1.13"/>
             </svg>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-moon">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="theme-icon theme-icon-moon hidden dark:block h-6 w-6">
               <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M16.8 15.2A7 7 0 0 1 8.8 7.2 7 7 0 1 0 16.8 15.2z"/>
             </svg>
           </button>
         </div>
-        <div class="hero-name-row">
+        <div class="hero-name-row flex items-baseline justify-between gap-4 w-full">
         <h1>Divyam Balani</h1>
-        <ul class="social-row" aria-label="Links">
+        <ul class="social-row flex flex-row flex-nowrap items-center justify-end gap-4 m-0 p-0 list-none text-xs" aria-label="Links">
           <li class="flex">
             <a target="_blank" rel="noopener noreferrer" href="https://x.com/balanidiv">X</a>
           </li>

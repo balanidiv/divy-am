@@ -112,7 +112,7 @@ html.dark .theme-icon-moon { display: block; }
   display: flex;
   flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   list-style: none;
   gap: 1rem;

@@ -215,7 +215,7 @@ def main() -> int:
         raise SystemExit("theme toggle must stay on the portrait line; found in footer")
     if 'id="theme-toggle"' not in html:
         raise SystemExit("theme toggle missing after rebuild")
-    if 'class="social-row"' not in html or "hero-name-row" not in html:
+    if "social-row" not in html or "hero-name-row" not in html:
         raise SystemExit("name+socials row missing after rebuild")
     if "social-row" in footer_html or "Resume" in footer_html:
         raise SystemExit("socials/Resume must stay on the name line; found in footer")
@@ -231,6 +231,8 @@ def main() -> int:
         raise SystemExit("social-row must stay above the intro")
     if "My Toolbox" not in html or "toolbox-heading" not in html:
         raise SystemExit("My Toolbox heading missing after rebuild")
+    if "chrome-critical" not in html or "styles.css?v=23" not in html:
+        raise SystemExit("critical chrome CSS / cache-bust missing after rebuild")
     if "1cUJ8cGwihEbyEVqy46okNAMeiOpWa98U" not in html:
         raise SystemExit("Drive resume href missing after rebuild")
     if "<title>Div Balani</title>" not in html:
