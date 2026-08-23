@@ -50,4 +50,4 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$BODY")
           echo "$RESP"
-          echo "$RESP" | python3 -c "import json,sys; r=json.load(sys.stdin); raise SystemExit('Railway deploy failed: '+json.dumps(r)) if r.get('errors') or not (r.get('data') or {}).get('serviceInstanceDeployV2') else print('deployed', r['data']['serviceInstanceDeployV2'])"
+          echo "$RESP" | python3 -c "import json,sys; r=json.load(sys.stdin) if r.get('errors') or not (r.get('data') or {}).get('serviceInstanceDeployV2'):raise SystemExit('Railway deploy failed: '+json.dumps(r)) print('deployed', r['data']['serviceInstanceDeployV2'])"
