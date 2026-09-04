@@ -1,6 +1,6 @@
 {
-  "pulled_at": "2026-08-23T20:25:28Z",
-  "pulled_at_ct": "2026-08-23 3:25 PM CT",
+  "pulled_at": "2026-09-04T18:26:40Z",
+  "pulled_at_ct": "2026-09-04 1:26 PM CT",
   "pulled_via": "GitHub Action + Notion API",
   "note": "Live on Railway (https://divy.am/). Tab title is Div Balani. Logo-row is SITE-8 and is not regenerated from this file.",
   "sources": {
@@ -75,9 +75,25 @@
       "dates": "Sep 2026–present",
       "date_start": "2026-09-03",
       "date_end": null,
-      "location": "",
-      "roles": [],
-      "body": []
+      "location": "Austin, TX",
+      "roles": [
+        "Product",
+        "Growth"
+      ],
+      "body": [
+        {
+          "type": "p",
+          "html": "Your zip, as a picture."
+        },
+        {
+          "type": "p",
+          "html": "Shipped utility: zip in → a recognizable neighborhood SVG out, copy the code."
+        },
+        {
+          "type": "p",
+          "html": "Live: <a href=\"https://foto.divy.am/\" target=\"_blank\" rel=\"noopener noreferrer\">https://foto.divy.am</a>"
+        }
+      ]
     },
     {
       "name": "Care.com",
