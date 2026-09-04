@@ -39,6 +39,7 @@ COMPANY_URLS = {
     "gloco": "https://gloco.ai/",
     "gloco.ai": "https://gloco.ai/",
     "deliverend": "https://deliverend.com/",
+    "foto": "https://foto.divy.am/",
     "aggressively organic": AO_WAYBACK,
     "ao": AO_WAYBACK,
 }
@@ -181,6 +182,8 @@ def company_url(name: str, fallback: str = "") -> str:
         return COMPANY_URLS["care.com"]
     if "deliverend" in key:
         return COMPANY_URLS["deliverend"]
+    if "foto" in key:
+        return COMPANY_URLS["foto"]
     return rewrite_href(fallback) if fallback else ""
 
 
@@ -433,9 +436,9 @@ def extract_work_row(page: dict, existing_by_key: dict) -> dict:
     # Prefer a value that looks like a company if both exist.
     title_key = name_key(title)
     company_key = name_key(str(company_prop or ""))
-    if company_key in COMPANY_URLS or company_key in ("gloco", "ao", "care.com", "deliverend"):
+    if company_key in COMPANY_URLS or company_key in ("gloco", "ao", "care.com", "deliverend", "foto"):
         name = str(company_prop).strip()
-    elif title_key in COMPANY_URLS or title_key in ("gloco", "ao", "care.com", "deliverend"):
+    elif title_key in COMPANY_URLS or title_key in ("gloco", "ao", "care.com", "deliverend", "foto"):
         name = title.strip()
 
     notion_title = prop_plain(

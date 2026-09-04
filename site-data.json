@@ -66,6 +66,20 @@
   ],
   "work": [
     {
+      "name": "foto",
+      "url": "https://foto.divy.am/",
+      "notion_url": "https://app.notion.com/p/3d1635ae4288815c9d57e363c05a9f5b",
+      "notion_title": "Your zip, as a picture.",
+      "display_role": "Your zip, as a picture.",
+      "outcome": "Shipped utility — zip in, neighborhood SVG out",
+      "dates": "Sep 2026–present",
+      "date_start": "2026-09-03",
+      "date_end": null,
+      "location": "",
+      "roles": [],
+      "body": []
+    },
+    {
       "name": "Care.com",
       "url": "https://care.com/",
       "notion_url": "https://app.notion.com/p/28b635ae428880ab9c27d6db4fcb9d5d",
