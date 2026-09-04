@@ -7,7 +7,8 @@ Preview only. This does **not** go live. Title stays Principal PM. One CMS: Noti
 | He edits | URL | Site section |
 | --- | --- | --- |
 | **divy.am Homepage** | https://app.notion.com/p/3c5635ae428881c49643c4d8c1630f1f | Intro paragraphs, Education. Tools heading is a note — the visible logo row is SITE-8 and is not overwritten. |
-| **Div’s Work** (page + inline DB) | https://app.notion.com/p/28b635ae428880ae9a82f68e329d9704 | Expandable Work rows. Collection `collection://28b635ae-4288-80ea-b04b-000b17320bed`. Company pages: Care.com, Gloco.ai, Deliverend, Aggressively Organic. |
+| **Div's Work** (page + inline DB) | https://app.notion.com/p/28b635ae428880ae9a82f68e329d9704 | Expandable Work rows (career jobs). Collection `collection://28b635ae-4288-80ea-b04b-000b17320bed`. Company pages: Care.com, Gloco.ai, Deliverend, Aggressively Organic. |
+| **divy.am Projects** | https://app.notion.com/p/b1410e89913e4f67a1971f82798f1542 | Projects section (shipped utilities, not career jobs). Collection `collection://0402327e-c17a-438f-bfb8-9268e85dcd34`. **Only `Published` checked rows render.** Connect via Add connections. |
 | **divy.am Posts** | https://app.notion.com/p/584f9cce43ae4bfb97eaae5a852a6da3 | Writing. Collection `collection://afbb4021-1278-4120-b69e-fceca046cac5`. Fields: Title, Slug, Date, Published, Summary. **Only `Published` checked rows render.** |
 | HOME (parent, do not treat as copy) | https://app.notion.com/p/30f45e37a6c3413bb4276290b6021acc | Workspace root that holds Homepage + Posts. |
 
@@ -26,7 +27,8 @@ Draft **Hello** (`/hello`, Published off) must never appear.
 
 **Wired (this snapshot)**
 
-- Intro, Education, and Work bodies come from the 2026-08-22 11:20 PM CT Notion pull, stored in `site-data.json`, then rendered by `rebuild.py`.
+- Intro, Education, Work, and Projects come from Notion pulls, stored in `site-data.json`, then rendered by `rebuild.py`.
+- Work = career jobs (Care.com, Gloco.ai, Deliverend, Aggressively Organic). Projects = shipped utilities (foto). Projects pull requires Notion integration connected to divy.am Projects DB.
 - Posts query is live: zero published rows. Hello is recorded in `posts_excluded` and is not rendered.
 - Care.com / Gloco / Deliverend / AO metrics are only those already in Notion (or already verified on the page). Placeholders `XXX` / `XX` million were omitted, not filled in.
 - AO company href stays the Wayback URL, not a live `aggressivelyorganic.com`. Missing-from-Notion WISH-TV + Wayback links were kept from the verified set. IndyStar was added because it is in the Notion AO body.

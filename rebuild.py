@@ -36,6 +36,10 @@ INTRO_RE = re.compile(
     r'(<div class="space-y-3">)(.*?)(</div>)',
     re.S,
 )
+PROJECTS_RE = re.compile(
+    r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 projects-list">)(.*?)(</ul>\s*</section>)',
+    re.S,
+)
 WORK_RE = re.compile(
     r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 work-list">)(.*?)(</ul>\s*</section>)',
     re.S,
@@ -89,6 +93,31 @@ def render_work(jobs: list) -> str:
             f'                  <span class="work-outcome">{job["outcome"]}</span>\n'
             "                </span>\n"
             f'                <span class="work-meta">{job["dates"]}</span>\n'
+            "              </summary>\n"
+            f'              <div class="work-body">\n{body}\n'
+            "              </div>\n"
+            "            </details>\n"
+            "          </li>"
+        )
+    return "\n" + "\n".join(lis) + "\n        "
+
+
+def render_projects(projects: list) -> str:
+    lis = []
+    for proj in projects:
+        body = render_body(proj["body"])
+        lis.append(
+            "          <li>\n"
+            "            <details>\n"
+            "              <summary>\n"
+            '                <span class="caret" aria-hidden="true"></span>\n'
+            '                <span class="work-main">\n'
+            f'                  <span class="work-title"><a href="{proj["url"]}" '
+            f'target="_blank" rel="noopener noreferrer">{proj["name"]}</a> '
+            f'<span class="work-role">{proj["display_role"]}</span></span>\n'
+            f'                  <span class="work-outcome">{proj["outcome"]}</span>\n'
+            "                </span>\n"
+            f'                <span class="work-meta">{proj["dates"]}</span>\n'
             "              </summary>\n"
             f'              <div class="work-body">\n{body}\n'
             "              </div>\n"
@@ -187,6 +216,15 @@ def main() -> int:
     logo_html = logo.group(0)
 
     html = sub_one(INTRO_RE, html, render_intro(data["intro"]), "intro")
+    
+    projects = sorted(data.get("projects") or [], key=lambda proj: (
+        (proj.get("date_start") or "").strip()
+        or (proj.get("date_end") or "").strip()
+        or ("9999-12-31" if "present" in (proj.get("dates") or "").lower() or "now" in (proj.get("dates") or "").lower() else "0000-00-00")
+    ), reverse=True)
+    if projects and PROJECTS_RE.search(html):
+        html = sub_one(PROJECTS_RE, html, render_projects(projects), "projects")
+    
     work = sorted(data.get("work") or [], key=lambda job: (
         (job.get("date_start") or "").strip()
         or (job.get("date_end") or "").strip()

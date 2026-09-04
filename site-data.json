@@ -64,6 +64,27 @@
       "detail": ""
     }
   ],
+  "projects": [
+    {
+      "name": "foto",
+      "url": "https://foto.divy.am/",
+      "display_role": "Your zip, as a picture.",
+      "outcome": "Shipped utility — zip in, neighborhood SVG out",
+      "dates": "Sep 2026–present",
+      "date_start": "2026-09-03",
+      "date_end": null,
+      "body": [
+        {
+          "type": "p",
+          "html": "foto is a utility, not a company. You enter your zip code, and it generates an SVG map of your neighborhood."
+        },
+        {
+          "type": "p",
+          "html": "Built to explore neighborhood boundaries and make beautiful location visualizations. Entirely on the web."
+        }
+      ]
+    }
+  ],
   "work": [
     {
       "name": "Care.com",
