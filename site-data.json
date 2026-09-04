@@ -76,11 +76,11 @@
       "body": [
         {
           "type": "p",
-          "html": "foto is a utility, not a company. You enter your zip code, and it generates an SVG map of your neighborhood."
+          "html": "foto is a utility, not a company. Zip in → a recognizable neighborhood picture out as SVG you can copy."
         },
         {
           "type": "p",
-          "html": "Built to explore neighborhood boundaries and make beautiful location visualizations. Entirely on the web."
+          "html": "Place-true for the zip (Austin reads Barton Springs-tier; NYC like Chelsea), warmer and more human — not a map."
         }
       ]
     }
