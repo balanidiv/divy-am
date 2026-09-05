@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#fdfcfb" />
   <link rel="canonical" href="/" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=23b" />
+  <link rel="stylesheet" href="./styles.css?v=24" />
   <style id="chrome-critical">
     .hero-ident{display:flex;align-items:center;justify-content:space-between;width:100%}
     .hero-name-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;width:100%}
@@ -111,6 +111,7 @@
   </script>
 </head>
 <body class="min-h-dvh flex flex-col gap-8 py-4 md:py-8 items-start bg-[#fdfcfb] dark:bg-[#161513] text-[#1a180f]/80 dark:text-[#ece9e3]/95 leading-relaxed antialiased">
+  <canvas id="grid-cursor" class="grid-cursor" aria-hidden="true"></canvas>
   <div class="flex-1 w-full">
     <main class="page mx-auto pt-4 md:pt-8 space-y-12">
       <div class="space-y-4">
@@ -349,5 +350,6 @@ Built the B2C and the B2B product 0-1 (web app + 2 mobile apps), built data pipe
       } catch (_) {}
     })();
   </script>
+  <script src="./grid-cursor.js"></script>
 </body>
 </html>

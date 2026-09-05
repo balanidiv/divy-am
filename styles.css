@@ -23,6 +23,37 @@ body {
 
 body {
   min-height: 100dvh;
+  position: relative;
+  z-index: 0;
+}
+
+/* SITE-24: behind content, above paper. Clicks pass through. */
+.grid-cursor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+body > .flex-1,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .grid-cursor {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-cursor {
+    display: none !important;
+  }
 }
 
 .page {
