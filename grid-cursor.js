@@ -198,6 +198,7 @@
 
   window.addEventListener("resize", resize, { passive: true });
   window.addEventListener("pointermove", onMove, { passive: true });
+  window.addEventListener("mousemove", onMove, { passive: true });
   document.addEventListener("mouseleave", onLeave, { passive: true });
   window.addEventListener("blur", onLeave);
   window.addEventListener("click", onClick, { passive: true });
