@@ -2,6 +2,7 @@
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
  * Draws only in the side gutters; cells that intersect the main .page column stay empty.
+ * Desktop: hover follow. Touch: tap-and-drag follow, clear on lift. Reduced-motion: off.
  */
 (function () {
   "use strict";
@@ -14,14 +15,12 @@
   var HOT_FILL = 0.08;
   var HOT_FILL_DARK = 0.1;
   var STROKE = [0, 0.16, 0.09];
+  var TOUCH_MOUSE_GUARD_MS = 700;
 
   var canvas = document.getElementById("grid-cursor");
   if (!canvas || !canvas.getContext) return;
 
-  var fine = window.matchMedia("(pointer: fine)");
-  var hover = window.matchMedia("(hover: hover)");
   var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var desktop = window.matchMedia("(min-width: 901px)"); // CSS: max-width 900px hides canvas
   var ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return;
 
@@ -34,6 +33,8 @@
   var mouseX = -1;
   var mouseY = -1;
   var hasPointer = false;
+  var dragId = null;
+  var ignoreMouseUntil = 0;
   var raf = 0;
   var ripples = [];
   var ink = { r: 28, g: 25, b: 20 };
@@ -42,7 +43,15 @@
   var pageEl = null;
 
   function allowed() {
-    return fine.matches && hover.matches && !motion.matches && desktop.matches;
+    return !motion.matches;
+  }
+
+  function isMouse(e) {
+    return !e.pointerType || e.pointerType === "mouse";
+  }
+
+  function isTouchLike(e) {
+    return e.pointerType === "touch" || e.pointerType === "pen";
   }
 
   function parseInk() {
@@ -180,22 +189,54 @@
     if (ripples.length) requestDraw();
   }
 
-  function onMove(e) {
-    if (!active) return;
-    if (e.pointerType && e.pointerType !== "mouse") return;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  function follow(x, y) {
+    mouseX = x;
+    mouseY = y;
     hasPointer = true;
     requestDraw();
   }
 
-  function onLeave(e) {
-    if (!active) return;
-    if (e && e.relatedTarget) return;
+  function clearFollow() {
     hasPointer = false;
     mouseX = -1;
     mouseY = -1;
     requestDraw();
+  }
+
+  function onPointerDown(e) {
+    if (!active || !isTouchLike(e)) return;
+    if (dragId !== null) return;
+    dragId = e.pointerId;
+    follow(e.clientX, e.clientY);
+  }
+
+  function onPointerMove(e) {
+    if (!active) return;
+    if (isTouchLike(e)) {
+      if (dragId === e.pointerId) follow(e.clientX, e.clientY);
+      return;
+    }
+    if (!isMouse(e)) return;
+    if (dragId !== null || performance.now() < ignoreMouseUntil) return;
+    follow(e.clientX, e.clientY);
+  }
+
+  function onPointerUp(e) {
+    if (!active || dragId === null || e.pointerId !== dragId) return;
+    dragId = null;
+    ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
+    clearFollow();
+  }
+
+  function onMouseMove(e) {
+    if (!active || dragId !== null || performance.now() < ignoreMouseUntil) return;
+    follow(e.clientX, e.clientY);
+  }
+
+  function onLeave(e) {
+    if (!active || dragId !== null) return;
+    if (e && e.relatedTarget) return;
+    clearFollow();
   }
 
   function nearCorner(x, y) {
@@ -215,6 +256,7 @@
 
   function onClick(e) {
     if (!active) return;
+    if (e.pointerType && e.pointerType !== "mouse") return;
     if (!nearCorner(e.clientX, e.clientY)) return;
     ripples.push({
       col: Math.floor(e.clientX / CELL),
@@ -238,8 +280,11 @@
 
   function bindInput() {
     window.addEventListener("resize", resize, { passive: true });
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.addEventListener("mouseleave", onLeave, { passive: true });
     window.addEventListener("blur", onLeave);
     window.addEventListener("click", onClick, { passive: true });
@@ -247,8 +292,11 @@
 
   function unbindInput() {
     window.removeEventListener("resize", resize);
-    window.removeEventListener("pointermove", onMove);
-    window.removeEventListener("mousemove", onMove);
+    window.removeEventListener("pointerdown", onPointerDown);
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerup", onPointerUp);
+    window.removeEventListener("pointercancel", onPointerUp);
+    window.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("mouseleave", onLeave);
     window.removeEventListener("blur", onLeave);
     window.removeEventListener("click", onClick);
@@ -286,6 +334,7 @@
     }
     active = false;
     hasPointer = false;
+    dragId = null;
     mouseX = -1;
     mouseY = -1;
     ripples = [];
@@ -304,10 +353,7 @@
     else if (typeof mq.addListener === "function") mq.addListener(onPrefs);
   }
 
-  listenMq(fine);
-  listenMq(hover);
   listenMq(motion);
-  listenMq(desktop);
 
   if (allowed()) start();
 })();

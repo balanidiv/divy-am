@@ -282,7 +282,7 @@ def main() -> int:
         raise SystemExit("social-row must stay above the intro")
     if "My Toolbox" not in html or "toolbox-heading" not in html:
         raise SystemExit("My Toolbox heading missing after rebuild")
-    if "chrome-critical" not in html or "styles.css?v=25" not in html:
+    if "chrome-critical" not in html or "styles.css?v=26" not in html:
         raise SystemExit("critical chrome CSS / cache-bust missing after rebuild")
     if 'id="grid-cursor"' not in html or "grid-cursor.js" not in html:
         raise SystemExit("SITE-24 grid cursor canvas/script missing after rebuild")

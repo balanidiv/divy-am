@@ -44,18 +44,6 @@ body > footer {
   z-index: 1;
 }
 
-@media (hover: none), (pointer: coarse) {
-  .grid-cursor {
-    display: none !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .grid-cursor {
-    display: none !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .grid-cursor {
     display: none !important;
