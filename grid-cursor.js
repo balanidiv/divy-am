@@ -1,7 +1,8 @@
 /**
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
- * Dead space = viewport minus main.page content box (sides, top, bottom). Never under prose.
+ * Dead space = viewport minus stacked section blocks inside main.page
+ * (outer L/R/T/B plus inter-section gaps and trailing column paper). Never under prose.
  * Touch: track any tap-and-drag; paint only while the pointer is in dead space.
  * Idle window listeners are passive. Non-passive preventDefault is limited to
  * dead-space hit layers (touch-action: none) and claimed-gesture move handlers.
@@ -35,6 +36,7 @@
   var contentR = 0;
   var contentT = 0;
   var contentB = 0;
+  var bands = [];
   var mouseX = -1;
   var mouseY = -1;
   var hasPointer = false;
@@ -67,8 +69,16 @@
     return e.pointerType === "touch" || e.pointerType === "pen";
   }
 
+  function inSection(y) {
+    for (var i = 0; i < bands.length; i++) {
+      if (y >= bands[i].t && y < bands[i].b) return true;
+    }
+    return false;
+  }
+
   function inDeadSpace(x, y) {
-    return x < contentL || x >= contentR || y < contentT || y >= contentB;
+    if (x < contentL || x >= contentR || y < contentT || y >= contentB) return true;
+    return !inSection(y);
   }
 
   function parseInk() {
@@ -96,6 +106,8 @@
       contentR = viewW;
       contentT = 0;
       contentB = viewH;
+      cacheBands(null);
+      layoutHits();
       return;
     }
     var rect = el.getBoundingClientRect();
@@ -116,22 +128,48 @@
       contentT = rect.top;
       contentB = rect.bottom;
     }
+    cacheBands(el);
     layoutHits();
+  }
+
+  function cacheBands(page) {
+    bands = [];
+    if (!page) return;
+    var kids = page.children;
+    for (var i = 0; i < kids.length; i++) {
+      var r = kids[i].getBoundingClientRect();
+      if (r.height <= 0) continue;
+      bands.push({ t: r.top, b: r.bottom });
+    }
+    bands.sort(function (a, b) {
+      return a.t - b.t;
+    });
+  }
+
+  function cellFullyInBand(x, y, r, b, band) {
+    return x >= contentL && r <= contentR && y >= band.t && b <= band.b;
   }
 
   function cellInDeadSpace(x, y) {
     var r = x + CELL;
     var b = y + CELL;
-    var fullyInside = x >= contentL && r <= contentR && y >= contentT && b <= contentB;
-    return !fullyInside;
+    for (var i = 0; i < bands.length; i++) {
+      if (cellFullyInBand(x, y, r, b, bands[i])) return false;
+    }
+    return true;
   }
 
   function clipToDeadSpace() {
     ctx.beginPath();
     ctx.rect(0, 0, viewW, viewH);
     var w = contentR - contentL;
-    var h = contentB - contentT;
-    if (w > 0 && h > 0) ctx.rect(contentL, contentT, w, h);
+    var i, h;
+    if (w > 0) {
+      for (i = 0; i < bands.length; i++) {
+        h = bands[i].b - bands[i].t;
+        if (h > 0) ctx.rect(contentL, bands[i].t, w, h);
+      }
+    }
     ctx.clip("evenodd");
   }
 
@@ -306,16 +344,43 @@
     el.style.height = h + "px";
   }
 
+  function destroyHit(el) {
+    var hitOpts = { passive: false };
+    el.removeEventListener("pointerdown", onPointerDown, hitOpts);
+    el.removeEventListener("pointermove", onPointerMove, hitOpts);
+    el.removeEventListener("touchstart", onTouchStart, hitOpts);
+    el.removeEventListener("touchmove", onTouchMove, hitOpts);
+    if (el.parentNode) el.parentNode.removeChild(el);
+  }
+
   function layoutHits() {
     if (!hits) return;
     var visL = Math.max(0, contentL);
     var visR = Math.min(viewW, contentR);
     var visT = Math.max(0, contentT);
     var visB = Math.min(viewH, contentB);
+    var colW = visR - visL;
+    var extras = [];
+    var i, gt, gb;
+    for (i = 0; i < bands.length - 1; i++) {
+      gt = Math.max(visT, bands[i].b);
+      gb = Math.min(visB, bands[i + 1].t);
+      extras.push([visL, gt, colW, gb - gt]);
+    }
+    if (bands.length) {
+      gt = Math.max(visT, bands[bands.length - 1].b);
+      extras.push([visL, gt, colW, visB - gt]);
+    }
+    var need = 4 + extras.length;
+    while (hits.length < need) hits.push(makeHitLayer());
+    while (hits.length > need) destroyHit(hits.pop());
     applyHitBox(hits[0], 0, 0, viewW, visT);
     applyHitBox(hits[1], 0, visB, viewW, viewH - visB);
     applyHitBox(hits[2], 0, visT, visL, visB - visT);
     applyHitBox(hits[3], visR, visT, viewW - visR, visB - visT);
+    for (i = 0; i < extras.length; i++) {
+      applyHitBox(hits[4 + i], extras[i][0], extras[i][1], extras[i][2], extras[i][3]);
+    }
   }
 
   function makeHitLayer() {
@@ -335,21 +400,13 @@
 
   function bindHitLayers() {
     if (hits) return;
-    hits = [makeHitLayer(), makeHitLayer(), makeHitLayer(), makeHitLayer()];
+    hits = [];
     layoutHits();
   }
 
   function unbindHitLayers() {
     if (!hits) return;
-    var hitOpts = { passive: false };
-    for (var i = 0; i < hits.length; i++) {
-      var el = hits[i];
-      el.removeEventListener("pointerdown", onPointerDown, hitOpts);
-      el.removeEventListener("pointermove", onPointerMove, hitOpts);
-      el.removeEventListener("touchstart", onTouchStart, hitOpts);
-      el.removeEventListener("touchmove", onTouchMove, hitOpts);
-      if (el.parentNode) el.parentNode.removeChild(el);
-    }
+    for (var i = 0; i < hits.length; i++) destroyHit(hits[i]);
     hits = null;
   }
 
