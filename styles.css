@@ -50,6 +50,12 @@ body > footer {
   }
 }
 
+@media (max-width: 900px) {
+  .grid-cursor {
+    display: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grid-cursor {
     display: none !important;

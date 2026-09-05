@@ -21,6 +21,7 @@
   var fine = window.matchMedia("(pointer: fine)");
   var hover = window.matchMedia("(hover: hover)");
   var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var desktop = window.matchMedia("(min-width: 901px)"); // CSS: max-width 900px hides canvas
   var ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return;
 
@@ -41,7 +42,7 @@
   var pageEl = null;
 
   function allowed() {
-    return fine.matches && hover.matches && !motion.matches;
+    return fine.matches && hover.matches && !motion.matches && desktop.matches;
   }
 
   function parseInk() {
@@ -93,6 +94,10 @@
 
   function resize() {
     if (!active) return;
+    if (!allowed()) {
+      stop();
+      return;
+    }
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     viewW = window.innerWidth;
     viewH = window.innerHeight;
@@ -302,6 +307,7 @@
   listenMq(fine);
   listenMq(hover);
   listenMq(motion);
+  listenMq(desktop);
 
   if (allowed()) start();
 })();
