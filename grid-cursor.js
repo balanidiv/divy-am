@@ -1,8 +1,8 @@
 /**
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
- * Column mask: content box, with ≥56px viewport-edge bands on narrow/touch.
- * Touch: track any tap-and-drag; paint only while the pointer is in an edge band.
+ * Dead space = viewport minus main.page content box (sides, top, bottom). Never under prose.
+ * Touch: track any tap-and-drag; paint only while the pointer is in dead space.
  */
 (function () {
   "use strict";
@@ -16,8 +16,6 @@
   var HOT_FILL_DARK = 0.1;
   var STROKE = [0, 0.16, 0.09];
   var TOUCH_MOUSE_GUARD_MS = 700;
-  var MIN_EDGE_GUTTER = 56;
-  var NARROW_VIEW = 700;
   var GUTTER_DRAG_SLOP = 10;
 
   var canvas = document.getElementById("grid-cursor");
@@ -31,13 +29,16 @@
   var dpr = 1;
   var viewW = 0;
   var viewH = 0;
-  var colLeft = 0;
-  var colRight = 0;
+  var contentL = 0;
+  var contentR = 0;
+  var contentT = 0;
+  var contentB = 0;
   var mouseX = -1;
   var mouseY = -1;
   var hasPointer = false;
   var dragId = null;
   var dragStartX = 0;
+  var dragStartY = 0;
   var dragClaimed = false;
   var panLocked = false;
   var ignoreMouseUntil = 0;
@@ -61,8 +62,8 @@
     return e.pointerType === "touch" || e.pointerType === "pen";
   }
 
-  function inGutter(x) {
-    return x < colLeft || x >= colRight;
+  function inDeadSpace(x, y) {
+    return x < contentL || x >= contentR || y < contentT || y >= contentB;
   }
 
   function parseInk() {
@@ -83,53 +84,49 @@
     return "rgba(" + ink.r + "," + ink.g + "," + ink.b + "," + a + ")";
   }
 
-  function forceMinEdge() {
-    var coarse = false;
-    var noHover = false;
-    try {
-      coarse = window.matchMedia("(pointer: coarse)").matches;
-      noHover = window.matchMedia("(hover: none)").matches;
-    } catch (err) {}
-    return viewW < NARROW_VIEW || coarse || noHover;
-  }
-
-  function cacheColumn() {
-    var minEdge = forceMinEdge() ? MIN_EDGE_GUTTER : 0;
-    var el = document.querySelector("main.page") || document.querySelector(".page");
+  function cacheContentBox() {
+    var el = document.querySelector("main.page");
     if (!el) {
-      colLeft = minEdge;
-      colRight = Math.max(minEdge, viewW - minEdge);
+      contentL = 0;
+      contentR = viewW;
+      contentT = 0;
+      contentB = viewH;
       return;
     }
     var rect = el.getBoundingClientRect();
     var cs = getComputedStyle(el);
     var padL = parseFloat(cs.paddingLeft) || 0;
     var padR = parseFloat(cs.paddingRight) || 0;
-    colLeft = rect.left + padL;
-    colRight = rect.right - padR;
-    if (colRight < colLeft) {
-      colLeft = rect.left;
-      colRight = rect.right;
+    var padT = parseFloat(cs.paddingTop) || 0;
+    var padB = parseFloat(cs.paddingBottom) || 0;
+    contentL = rect.left + padL;
+    contentR = rect.right - padR;
+    contentT = rect.top + padT;
+    contentB = rect.bottom - padB;
+    if (contentR < contentL) {
+      contentL = rect.left;
+      contentR = rect.right;
     }
-    if (minEdge > 0) {
-      colLeft = Math.max(colLeft, minEdge);
-      colRight = Math.min(colRight, viewW - minEdge);
-      if (colRight < colLeft) {
-        colLeft = minEdge;
-        colRight = viewW - minEdge;
-      }
+    if (contentB < contentT) {
+      contentT = rect.top;
+      contentB = rect.bottom;
     }
   }
 
-  function cellInMargin(x) {
-    return x < colLeft || x + CELL > colRight;
+  function cellInDeadSpace(x, y) {
+    var r = x + CELL;
+    var b = y + CELL;
+    if (r <= contentL || x >= contentR || b <= contentT || y >= contentB) return true;
+    return false;
   }
 
-  function clipToGutters() {
+  function clipToDeadSpace() {
     ctx.beginPath();
-    if (colLeft > 0) ctx.rect(0, 0, colLeft, viewH);
-    if (colRight < viewW) ctx.rect(colRight, 0, viewW - colRight, viewH);
-    ctx.clip();
+    ctx.rect(0, 0, viewW, viewH);
+    var w = contentR - contentL;
+    var h = contentB - contentT;
+    if (w > 0 && h > 0) ctx.rect(contentL, contentT, w, h);
+    ctx.clip("evenodd");
   }
 
   function cancelDraw() {
@@ -160,7 +157,7 @@
     canvas.style.height = viewH + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     parseInk();
-    cacheColumn();
+    cacheContentBox();
     requestDraw();
   }
 
@@ -170,13 +167,13 @@
   }
 
   function strokeCell(x, y, alpha) {
-    if (alpha <= 0.004 || !cellInMargin(x)) return;
+    if (alpha <= 0.004 || !cellInDeadSpace(x, y)) return;
     ctx.strokeStyle = rgba(alpha);
     ctx.strokeRect(x + 0.5, y + 0.5, CELL - 1, CELL - 1);
   }
 
   function fillCell(x, y, alpha) {
-    if (alpha <= 0.004 || !cellInMargin(x)) return;
+    if (alpha <= 0.004 || !cellInDeadSpace(x, y)) return;
     ctx.fillStyle = rgba(alpha);
     ctx.fillRect(x + 1, y + 1, CELL - 2, CELL - 2);
   }
@@ -184,16 +181,17 @@
   function paint() {
     raf = 0;
     if (!active) return;
+    cacheContentBox();
     ctx.clearRect(0, 0, viewW, viewH);
     ctx.save();
-    clipToGutters();
+    clipToDeadSpace();
     ctx.lineWidth = 1 / dpr;
 
     var now = performance.now();
     var liveRipples = [];
     var i, r, t, radius, dx, dy, dist, col, row, x, y;
 
-    if (hasPointer && mouseX >= 0 && inGutter(mouseX)) {
+    if (hasPointer && mouseX >= 0 && inDeadSpace(mouseX, mouseY)) {
       col = Math.floor(mouseX / CELL);
       row = Math.floor(mouseY / CELL);
       var fillA = document.documentElement.classList.contains("dark") ? HOT_FILL_DARK : HOT_FILL;
@@ -264,9 +262,9 @@
     if (document.body) document.body.style.touchAction = "";
   }
 
-  function claimMarginGesture(e, x) {
+  function claimMarginGesture(e, x, y) {
     if (!e || !e.cancelable) return;
-    if (inGutter(x)) {
+    if (inDeadSpace(x, y)) {
       dragClaimed = true;
       lockPan();
       e.preventDefault();
@@ -287,10 +285,11 @@
   }
 
   function beginTouchDrag(id, x, y) {
-    cacheColumn();
+    cacheContentBox();
     dragId = id;
     dragStartX = x;
-    dragClaimed = inGutter(x);
+    dragStartY = y;
+    dragClaimed = inDeadSpace(x, y);
     if (dragClaimed) lockPan();
     follow(x, y);
   }
@@ -307,7 +306,7 @@
     if (!active || !isTouchLike(e)) return;
     if (dragId !== null) return;
     beginTouchDrag(e.pointerId, e.clientX, e.clientY);
-    claimMarginGesture(e, e.clientX);
+    claimMarginGesture(e, e.clientX, e.clientY);
   }
 
   function onPointerMove(e) {
@@ -315,7 +314,7 @@
     if (isTouchLike(e)) {
       if (dragId !== e.pointerId) return;
       follow(e.clientX, e.clientY);
-      claimMarginGesture(e, e.clientX);
+      claimMarginGesture(e, e.clientX, e.clientY);
       return;
     }
     if (!isMouse(e)) return;
@@ -372,7 +371,7 @@
     if (!active || !e.touches || !e.touches.length) return;
     var t = e.touches[0];
     if (dragId === null) beginTouchDrag("touch:" + t.identifier, t.clientX, t.clientY);
-    claimMarginGesture(e, t.clientX);
+    claimMarginGesture(e, t.clientX, t.clientY);
   }
 
   function onTouchMove(e) {
@@ -380,7 +379,7 @@
     var t = activeTouch(e);
     if (!t) return;
     follow(t.clientX, t.clientY);
-    claimMarginGesture(e, t.clientX);
+    claimMarginGesture(e, t.clientX, t.clientY);
   }
 
   function onTouchEnd(e) {
@@ -424,12 +423,19 @@
 
   function onColumnResize() {
     if (!active) return;
-    cacheColumn();
+    cacheContentBox();
+    requestDraw();
+  }
+
+  function onScroll() {
+    if (!active) return;
+    cacheContentBox();
     requestDraw();
   }
 
   function bindInput() {
     window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pointerdown", onPointerDown, moveOpts);
     window.addEventListener("pointermove", onPointerMove, moveOpts);
     window.addEventListener("pointerup", onPointerUp, { passive: true });
@@ -446,6 +452,7 @@
 
   function unbindInput() {
     window.removeEventListener("resize", resize);
+    window.removeEventListener("scroll", onScroll);
     window.removeEventListener("pointerdown", onPointerDown, moveOpts);
     window.removeEventListener("pointermove", onPointerMove, moveOpts);
     window.removeEventListener("pointerup", onPointerUp);
@@ -465,7 +472,7 @@
     themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     if (typeof ResizeObserver === "undefined") return;
-    pageEl = document.querySelector("main.page") || document.querySelector(".page");
+    pageEl = document.querySelector("main.page");
     if (!pageEl) return;
     if (!colObs) colObs = new ResizeObserver(onColumnResize);
     colObs.observe(pageEl);
