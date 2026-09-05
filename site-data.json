@@ -25,11 +25,11 @@
       "collection": "collection://28b635ae-4288-80ea-b04b-000b17320bed",
       "maps_to": "Expandable work rows (Care.com, Gloco.ai, Deliverend, Aggressively Organic)."
     },
-    "tinkerings_db": {
-      "title": "divy.am Tinkerings",
+    "projects_db": {
+      "title": "divy.am Projects",
       "url": "https://app.notion.com/p/b1410e89913e4f67a1971f82798f1542",
       "collection": "collection://0402327e-c17a-438f-bfb8-9268e85dcd34",
-      "maps_to": "Tinkerings section. Shipped utilities. Only rows with Published checked."
+      "maps_to": "Projects section. Shipped utilities. Only rows with Published checked."
     },
     "posts_db": {
       "title": "divy.am Posts",
@@ -276,7 +276,7 @@
       "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City."
     }
   ],
-  "tinkerings": [
+  "projects": [
     {
       "name": "foto",
       "url": "https://foto.divy.am/",

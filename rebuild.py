@@ -36,8 +36,8 @@ INTRO_RE = re.compile(
     r'(<div class="space-y-3">)(.*?)(</div>)',
     re.S,
 )
-TINKERINGS_RE = re.compile(
-    r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 tinkerings-list">)(.*?)(</ul>\s*</section>)',
+PROJECTS_RE = re.compile(
+    r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 projects-list">)(.*?)(</ul>\s*</section>)',
     re.S,
 )
 WORK_RE = re.compile(
@@ -102,9 +102,9 @@ def render_work(jobs: list) -> str:
     return "\n" + "\n".join(lis) + "\n        "
 
 
-def render_tinkerings(tinkerings: list) -> str:
+def render_projects(projects: list) -> str:
     lis = []
-    for proj in tinkerings:
+    for proj in projects:
         body = render_body(proj["body"])
         lis.append(
             "          <li>\n"
@@ -217,13 +217,13 @@ def main() -> int:
 
     html = sub_one(INTRO_RE, html, render_intro(data["intro"]), "intro")
     
-    tinkerings = sorted(data.get("tinkerings") or [], key=lambda proj: (
+    projects = sorted(data.get("projects") or [], key=lambda proj: (
         (proj.get("date_start") or "").strip()
         or (proj.get("date_end") or "").strip()
         or ("9999-12-31" if "present" in (proj.get("dates") or "").lower() or "now" in (proj.get("dates") or "").lower() else "0000-00-00")
     ), reverse=True)
-    if tinkerings and TINKERINGS_RE.search(html):
-        html = sub_one(TINKERINGS_RE, html, render_tinkerings(tinkerings), "tinkerings")
+    if projects and PROJECTS_RE.search(html):
+        html = sub_one(PROJECTS_RE, html, render_projects(projects), "projects")
     
     work = sorted(data.get("work") or [], key=lambda job: (
         (job.get("date_start") or "").strip()
