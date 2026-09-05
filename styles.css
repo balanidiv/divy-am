@@ -53,7 +53,7 @@ body > footer {
 .page {
   width: 100%;
   max-width: 36rem;
-  padding-inline: 1.25rem; /* SITE-24: content-box gutters on narrow viewports */
+  padding-inline: 1.25rem; /* SITE-24: padding is a gutter; JS also forces ≥56px on narrow/touch */
 }
 
 ::selection {

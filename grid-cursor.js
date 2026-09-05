@@ -1,8 +1,8 @@
 /**
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
- * Column mask is the .page CONTENT box (padding-inline gutters are drawable).
- * Desktop: hover follow. Touch: tap-and-drag in gutters, clear on lift. Reduced-motion: off.
+ * Column mask: content box, with ≥56px viewport-edge bands on narrow/touch.
+ * Desktop: hover follow. Touch: follow any tap-and-drag; paint clipped to gutters.
  */
 (function () {
   "use strict";
@@ -16,6 +16,9 @@
   var HOT_FILL_DARK = 0.1;
   var STROKE = [0, 0.16, 0.09];
   var TOUCH_MOUSE_GUARD_MS = 700;
+  var MIN_EDGE_GUTTER = 56;
+  var NARROW_VIEW = 700;
+  var GUTTER_DRAG_SLOP = 10;
 
   var canvas = document.getElementById("grid-cursor");
   if (!canvas || !canvas.getContext) return;
@@ -34,6 +37,8 @@
   var mouseY = -1;
   var hasPointer = false;
   var dragId = null;
+  var dragStartX = 0;
+  var dragClaimed = false;
   var ignoreMouseUntil = 0;
   var raf = 0;
   var ripples = [];
@@ -77,11 +82,22 @@
     return "rgba(" + ink.r + "," + ink.g + "," + ink.b + "," + a + ")";
   }
 
+  function forceMinEdge() {
+    var coarse = false;
+    var noHover = false;
+    try {
+      coarse = window.matchMedia("(pointer: coarse)").matches;
+      noHover = window.matchMedia("(hover: none)").matches;
+    } catch (err) {}
+    return viewW < NARROW_VIEW || coarse || noHover;
+  }
+
   function cacheColumn() {
+    var minEdge = forceMinEdge() ? MIN_EDGE_GUTTER : 0;
     var el = document.querySelector("main.page") || document.querySelector(".page");
     if (!el) {
-      colLeft = 0;
-      colRight = viewW;
+      colLeft = minEdge;
+      colRight = Math.max(minEdge, viewW - minEdge);
       return;
     }
     var rect = el.getBoundingClientRect();
@@ -93,6 +109,14 @@
     if (colRight < colLeft) {
       colLeft = rect.left;
       colRight = rect.right;
+    }
+    if (minEdge > 0) {
+      colLeft = Math.max(colLeft, minEdge);
+      colRight = Math.min(colRight, viewW - minEdge);
+      if (colRight < colLeft) {
+        colLeft = minEdge;
+        colRight = viewW - minEdge;
+      }
     }
   }
 
@@ -226,12 +250,36 @@
   }
 
   function claimMarginGesture(e, x) {
-    if (!e || !e.cancelable || !inGutter(x)) return;
-    e.preventDefault();
+    if (!e || !e.cancelable) return;
+    if (inGutter(x)) {
+      dragClaimed = true;
+      e.preventDefault();
+      return;
+    }
+    if (dragClaimed) {
+      e.preventDefault();
+      return;
+    }
+    var dx = x - dragStartX;
+    var towardLeft = dx < -GUTTER_DRAG_SLOP && dragStartX < viewW / 2;
+    var towardRight = dx > GUTTER_DRAG_SLOP && dragStartX >= viewW / 2;
+    if (towardLeft || towardRight) {
+      dragClaimed = true;
+      e.preventDefault();
+    }
+  }
+
+  function beginTouchDrag(id, x, y) {
+    cacheColumn();
+    dragId = id;
+    dragStartX = x;
+    dragClaimed = inGutter(x);
+    follow(x, y);
   }
 
   function endDrag() {
     dragId = null;
+    dragClaimed = false;
     ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
     clearFollow();
   }
@@ -239,10 +287,7 @@
   function onPointerDown(e) {
     if (!active || !isTouchLike(e)) return;
     if (dragId !== null) return;
-    cacheColumn();
-    if (!inGutter(e.clientX)) return;
-    dragId = e.pointerId;
-    follow(e.clientX, e.clientY);
+    beginTouchDrag(e.pointerId, e.clientX, e.clientY);
   }
 
   function onPointerMove(e) {
@@ -289,11 +334,8 @@
 
   function onTouchStart(e) {
     if (!active || dragId !== null || !e.touches || !e.touches.length) return;
-    cacheColumn();
     var t = e.touches[0];
-    if (!inGutter(t.clientX)) return;
-    dragId = "touch:" + t.identifier;
-    follow(t.clientX, t.clientY);
+    beginTouchDrag("touch:" + t.identifier, t.clientX, t.clientY);
   }
 
   function onTouchMove(e) {
@@ -418,6 +460,7 @@
     active = false;
     hasPointer = false;
     dragId = null;
+    dragClaimed = false;
     mouseX = -1;
     mouseY = -1;
     ripples = [];
