@@ -39,6 +39,7 @@
   var dragId = null;
   var dragStartX = 0;
   var dragClaimed = false;
+  var panLocked = false;
   var ignoreMouseUntil = 0;
   var raf = 0;
   var ripples = [];
@@ -249,10 +250,25 @@
     requestDraw();
   }
 
+  function lockPan() {
+    if (panLocked) return;
+    panLocked = true;
+    document.documentElement.style.touchAction = "none";
+    if (document.body) document.body.style.touchAction = "none";
+  }
+
+  function unlockPan() {
+    if (!panLocked) return;
+    panLocked = false;
+    document.documentElement.style.touchAction = "";
+    if (document.body) document.body.style.touchAction = "";
+  }
+
   function claimMarginGesture(e, x) {
     if (!e || !e.cancelable) return;
     if (inGutter(x)) {
       dragClaimed = true;
+      lockPan();
       e.preventDefault();
       return;
     }
@@ -265,6 +281,7 @@
     var towardRight = dx > GUTTER_DRAG_SLOP && dragStartX >= viewW / 2;
     if (towardLeft || towardRight) {
       dragClaimed = true;
+      lockPan();
       e.preventDefault();
     }
   }
@@ -274,12 +291,14 @@
     dragId = id;
     dragStartX = x;
     dragClaimed = inGutter(x);
+    if (dragClaimed) lockPan();
     follow(x, y);
   }
 
   function endDrag() {
     dragId = null;
     dragClaimed = false;
+    unlockPan();
     ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
     clearFollow();
   }
@@ -288,6 +307,7 @@
     if (!active || !isTouchLike(e)) return;
     if (dragId !== null) return;
     beginTouchDrag(e.pointerId, e.clientX, e.clientY);
+    claimMarginGesture(e, e.clientX);
   }
 
   function onPointerMove(e) {
@@ -305,6 +325,12 @@
 
   function onPointerUp(e) {
     if (!active || dragId !== e.pointerId) return;
+    endDrag();
+  }
+
+  function onPointerCancel(e) {
+    if (!active || dragId !== e.pointerId) return;
+    if (dragClaimed) return;
     endDrag();
   }
 
@@ -332,27 +358,34 @@
     return null;
   }
 
+  function activeTouch(e) {
+    var id = touchId();
+    if (!isNaN(id)) {
+      return findTouch(e.touches, id) || findTouch(e.changedTouches, id);
+    }
+    if (e.touches && e.touches.length) return e.touches[0];
+    if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0];
+    return null;
+  }
+
   function onTouchStart(e) {
-    if (!active || dragId !== null || !e.touches || !e.touches.length) return;
+    if (!active || !e.touches || !e.touches.length) return;
     var t = e.touches[0];
-    beginTouchDrag("touch:" + t.identifier, t.clientX, t.clientY);
+    if (dragId === null) beginTouchDrag("touch:" + t.identifier, t.clientX, t.clientY);
+    claimMarginGesture(e, t.clientX);
   }
 
   function onTouchMove(e) {
-    if (!active) return;
-    var id = touchId();
-    if (isNaN(id)) return;
-    var t = findTouch(e.touches, id) || findTouch(e.changedTouches, id);
+    if (!active || dragId === null) return;
+    var t = activeTouch(e);
     if (!t) return;
     follow(t.clientX, t.clientY);
     claimMarginGesture(e, t.clientX);
   }
 
   function onTouchEnd(e) {
-    if (!active) return;
-    var id = touchId();
-    if (isNaN(id)) return;
-    if (findTouch(e.touches, id)) return;
+    if (!active || dragId === null) return;
+    if (e.touches && e.touches.length) return;
     endDrag();
   }
 
@@ -397,11 +430,11 @@
 
   function bindInput() {
     window.addEventListener("resize", resize, { passive: true });
-    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerdown", onPointerDown, moveOpts);
     window.addEventListener("pointermove", onPointerMove, moveOpts);
     window.addEventListener("pointerup", onPointerUp, { passive: true });
-    window.addEventListener("pointercancel", onPointerUp, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("pointercancel", onPointerCancel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, moveOpts);
     window.addEventListener("touchmove", onTouchMove, moveOpts);
     window.addEventListener("touchend", onTouchEnd, { passive: true });
     window.addEventListener("touchcancel", onTouchEnd, { passive: true });
@@ -413,11 +446,11 @@
 
   function unbindInput() {
     window.removeEventListener("resize", resize);
-    window.removeEventListener("pointerdown", onPointerDown);
+    window.removeEventListener("pointerdown", onPointerDown, moveOpts);
     window.removeEventListener("pointermove", onPointerMove, moveOpts);
     window.removeEventListener("pointerup", onPointerUp);
-    window.removeEventListener("pointercancel", onPointerUp);
-    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("pointercancel", onPointerCancel);
+    window.removeEventListener("touchstart", onTouchStart, moveOpts);
     window.removeEventListener("touchmove", onTouchMove, moveOpts);
     window.removeEventListener("touchend", onTouchEnd);
     window.removeEventListener("touchcancel", onTouchEnd);
@@ -461,6 +494,7 @@
     hasPointer = false;
     dragId = null;
     dragClaimed = false;
+    unlockPan();
     mouseX = -1;
     mouseY = -1;
     ripples = [];
