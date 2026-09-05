@@ -1,6 +1,6 @@
 {
-  "pulled_at": "2026-09-04T18:26:40Z",
-  "pulled_at_ct": "2026-09-04 1:26 PM CT",
+  "pulled_at": "2026-09-05T04:22:10Z",
+  "pulled_at_ct": "2026-09-04 11:22 PM CT",
   "pulled_via": "GitHub Action + Notion API",
   "note": "Live on Railway (https://divy.am/). Tab title is Div Balani. Logo-row is SITE-8 and is not regenerated from this file.",
   "sources": {
@@ -24,6 +24,12 @@
       "url": "https://app.notion.com/p/28b635ae42888082ab01c925be084c98",
       "collection": "collection://28b635ae-4288-80ea-b04b-000b17320bed",
       "maps_to": "Expandable work rows (Care.com, Gloco.ai, Deliverend, Aggressively Organic)."
+    },
+    "tinkerings_db": {
+      "title": "divy.am Tinkerings",
+      "url": "https://app.notion.com/p/b1410e89913e4f67a1971f82798f1542",
+      "collection": "collection://0402327e-c17a-438f-bfb8-9268e85dcd34",
+      "maps_to": "Tinkerings section. Shipped utilities. Only rows with Published checked."
     },
     "posts_db": {
       "title": "divy.am Posts",
@@ -64,58 +70,7 @@
       "detail": ""
     }
   ],
-  "tinkerings": [
-    {
-      "name": "foto",
-      "url": "https://foto.divy.am/",
-      "display_role": "Your zip, as a picture.",
-      "outcome": "Shipped utility — zip in, neighborhood SVG out",
-      "dates": "Sep 2026–present",
-      "date_start": "2026-09-03",
-      "date_end": null,
-      "body": [
-        {
-          "type": "p",
-          "html": "foto is a utility, not a company. Zip in → a recognizable neighborhood picture out as SVG you can copy."
-        },
-        {
-          "type": "p",
-          "html": "Place-true for the zip (Austin reads Barton Springs-tier; NYC like Chelsea), warmer and more human — not a map."
-        }
-      ]
-    }
-  ],
   "work": [
-    {
-      "name": "foto",
-      "url": "https://foto.divy.am/",
-      "notion_url": "https://app.notion.com/p/3d1635ae4288815c9d57e363c05a9f5b",
-      "notion_title": "Your zip, as a picture.",
-      "display_role": "Your zip, as a picture.",
-      "outcome": "Shipped utility — zip in, neighborhood SVG out",
-      "dates": "Sep 2026–present",
-      "date_start": "2026-09-03",
-      "date_end": null,
-      "location": "Austin, TX",
-      "roles": [
-        "Product",
-        "Growth"
-      ],
-      "body": [
-        {
-          "type": "p",
-          "html": "Your zip, as a picture."
-        },
-        {
-          "type": "p",
-          "html": "Shipped utility: zip in → a recognizable neighborhood SVG out, copy the code."
-        },
-        {
-          "type": "p",
-          "html": "Live: <a href=\"https://foto.divy.am/\" target=\"_blank\" rel=\"noopener noreferrer\">https://foto.divy.am</a>"
-        }
-      ]
-    },
     {
       "name": "Care.com",
       "url": "https://care.com/",
@@ -319,6 +274,35 @@
         }
       ],
       "notes": "Company link is the verified Wayback URL (not in the Notion body). WISH-TV press link kept from the existing verified set; Notion had Fast Company, Forbes, IndyStar, Food+City."
+    }
+  ],
+  "tinkerings": [
+    {
+      "name": "foto",
+      "url": "https://foto.divy.am/",
+      "notion_url": "https://app.notion.com/p/3d1635ae428881b4a488ccc74d6c5f38",
+      "notion_title": "foto",
+      "display_role": "Your zip, as a picture.",
+      "outcome": "Shipped utility — zip in, neighborhood SVG out",
+      "dates": "Sep 2026–present",
+      "date_start": "2026-09-03",
+      "date_end": null,
+      "location": "",
+      "roles": [],
+      "body": [
+        {
+          "type": "p",
+          "html": "Your zip, as a picture."
+        },
+        {
+          "type": "p",
+          "html": "Shipped utility: zip in → a recognizable neighborhood SVG out, copy the code. Not a company. Not a map."
+        },
+        {
+          "type": "p",
+          "html": "Live: <a href=\"https://foto.divy.am/\" target=\"_blank\" rel=\"noopener noreferrer\">https://foto.divy.am</a>"
+        }
+      ]
     }
   ],
   "posts_published": [],
