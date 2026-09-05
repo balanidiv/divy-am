@@ -2,7 +2,7 @@
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
  * Column mask: content box, with ≥56px viewport-edge bands on narrow/touch.
- * Desktop: hover follow. Touch: follow any tap-and-drag; paint clipped to gutters.
+ * Touch: track any tap-and-drag; paint only while the pointer is in an edge band.
  */
 (function () {
   "use strict";
@@ -192,7 +192,7 @@
     var liveRipples = [];
     var i, r, t, radius, dx, dy, dist, col, row, x, y;
 
-    if (hasPointer && mouseX >= 0) {
+    if (hasPointer && mouseX >= 0 && inGutter(mouseX)) {
       col = Math.floor(mouseX / CELL);
       row = Math.floor(mouseY / CELL);
       var fillA = document.documentElement.classList.contains("dark") ? HOT_FILL_DARK : HOT_FILL;
