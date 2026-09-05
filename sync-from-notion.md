@@ -28,7 +28,7 @@ Draft **Hello** (`/hello`, Published off) must never appear.
 **Wired (this snapshot)**
 
 - Intro, Education, Work, and Projects come from Notion pulls, stored in `site-data.json`, then rendered by `rebuild.py`.
-- Work = career jobs (Care.com, Gloco.ai, Deliverend, Aggressively Organic). Tinkerings = shipped utilities (foto). Projects pull requires Notion integration connected to divy.am Tinkerings DB.
+- Work = career jobs (Care.com, Gloco.ai, Deliverend, Aggressively Organic). Tinkerings = shipped utilities (foto). Tinkerings pull requires Notion integration connected to divy.am Tinkerings DB.
 - Posts query is live: zero published rows. Hello is recorded in `posts_excluded` and is not rendered.
 - Care.com / Gloco / Deliverend / AO metrics are only those already in Notion (or already verified on the page). Placeholders `XXX` / `XX` million were omitted, not filled in.
 - AO company href stays the Wayback URL, not a live `aggressivelyorganic.com`. Missing-from-Notion WISH-TV + Wayback links were kept from the verified set. IndyStar was added because it is in the Notion AO body.
