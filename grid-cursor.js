@@ -21,11 +21,10 @@
   var fine = window.matchMedia("(pointer: fine)");
   var hover = window.matchMedia("(hover: hover)");
   var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!fine.matches || !hover.matches || motion.matches) return;
-
   var ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return;
 
+  var active = false;
   var dpr = 1;
   var viewW = 0;
   var viewH = 0;
@@ -37,6 +36,13 @@
   var raf = 0;
   var ripples = [];
   var ink = { r: 28, g: 25, b: 20 };
+  var themeObs = null;
+  var colObs = null;
+  var pageEl = null;
+
+  function allowed() {
+    return fine.matches && hover.matches && !motion.matches;
+  }
 
   function parseInk() {
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--fg").trim() || "#1a180f";
@@ -72,7 +78,21 @@
     return x + CELL <= colLeft || x >= colRight;
   }
 
+  function cancelDraw() {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+  }
+
+  function clearSurface() {
+    cancelDraw();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
   function resize() {
+    if (!active) return;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     viewW = window.innerWidth;
     viewH = window.innerHeight;
@@ -87,7 +107,7 @@
   }
 
   function requestDraw() {
-    if (raf) return;
+    if (!active || raf) return;
     raf = requestAnimationFrame(paint);
   }
 
@@ -105,6 +125,7 @@
 
   function paint() {
     raf = 0;
+    if (!active) return;
     ctx.clearRect(0, 0, viewW, viewH);
     ctx.lineWidth = 1 / dpr;
 
@@ -147,10 +168,15 @@
       }
     }
     ripples = liveRipples;
+    if (!active) {
+      ctx.clearRect(0, 0, viewW, viewH);
+      return;
+    }
     if (ripples.length) requestDraw();
   }
 
   function onMove(e) {
+    if (!active) return;
     if (e.pointerType && e.pointerType !== "mouse") return;
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -159,6 +185,7 @@
   }
 
   function onLeave(e) {
+    if (!active) return;
     if (e && e.relatedTarget) return;
     hasPointer = false;
     mouseX = -1;
@@ -182,6 +209,7 @@
   }
 
   function onClick(e) {
+    if (!active) return;
     if (!nearCorner(e.clientX, e.clientY)) return;
     ripples.push({
       col: Math.floor(e.clientX / CELL),
@@ -192,41 +220,88 @@
   }
 
   function onTheme() {
+    if (!active) return;
     parseInk();
     requestDraw();
   }
 
-  window.addEventListener("resize", resize, { passive: true });
-  window.addEventListener("pointermove", onMove, { passive: true });
-  window.addEventListener("mousemove", onMove, { passive: true });
-  document.addEventListener("mouseleave", onLeave, { passive: true });
-  window.addEventListener("blur", onLeave);
-  window.addEventListener("click", onClick, { passive: true });
-
-  var mq = [fine, hover, motion];
-  for (var i = 0; i < mq.length; i++) {
-    mq[i].addEventListener("change", function () {
-      if (!fine.matches || !hover.matches || motion.matches) {
-        hasPointer = false;
-        ripples = [];
-        ctx.clearRect(0, 0, viewW, viewH);
-      }
-    });
+  function onColumnResize() {
+    if (!active) return;
+    cacheColumn();
+    requestDraw();
   }
 
-  var themeObs = new MutationObserver(onTheme);
-  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  function bindInput() {
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseleave", onLeave, { passive: true });
+    window.addEventListener("blur", onLeave);
+    window.addEventListener("click", onClick, { passive: true });
+  }
 
-  if (typeof ResizeObserver !== "undefined") {
-    var page = document.querySelector("main.page") || document.querySelector(".page");
-    if (page) {
-      var colObs = new ResizeObserver(function () {
-        cacheColumn();
-        requestDraw();
-      });
-      colObs.observe(page);
+  function unbindInput() {
+    window.removeEventListener("resize", resize);
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("mousemove", onMove);
+    document.removeEventListener("mouseleave", onLeave);
+    window.removeEventListener("blur", onLeave);
+    window.removeEventListener("click", onClick);
+  }
+
+  function bindObservers() {
+    if (!themeObs) themeObs = new MutationObserver(onTheme);
+    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    if (typeof ResizeObserver === "undefined") return;
+    pageEl = document.querySelector("main.page") || document.querySelector(".page");
+    if (!pageEl) return;
+    if (!colObs) colObs = new ResizeObserver(onColumnResize);
+    colObs.observe(pageEl);
+  }
+
+  function unbindObservers() {
+    if (themeObs) themeObs.disconnect();
+    if (colObs && pageEl) colObs.unobserve(pageEl);
+    pageEl = null;
+  }
+
+  function start() {
+    if (active) return;
+    active = true;
+    bindInput();
+    bindObservers();
+    resize();
+  }
+
+  function stop() {
+    if (!active) {
+      cancelDraw();
+      return;
     }
+    active = false;
+    hasPointer = false;
+    mouseX = -1;
+    mouseY = -1;
+    ripples = [];
+    unbindInput();
+    unbindObservers();
+    clearSurface();
   }
 
-  resize();
+  function onPrefs() {
+    if (allowed()) start();
+    else stop();
+  }
+
+  function listenMq(mq) {
+    if (typeof mq.addEventListener === "function") mq.addEventListener("change", onPrefs);
+    else if (typeof mq.addListener === "function") mq.addListener(onPrefs);
+  }
+
+  listenMq(fine);
+  listenMq(hover);
+  listenMq(motion);
+
+  if (allowed()) start();
 })();
