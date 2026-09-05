@@ -1,8 +1,8 @@
 /**
  * SITE-24 — mouse-following grid cursor (Direction A, paper/ink).
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
- * Draws only in the side gutters; cells that intersect the main .page column stay empty.
- * Desktop: hover follow. Touch: tap-and-drag follow, clear on lift. Reduced-motion: off.
+ * Column mask is the .page CONTENT box (padding-inline gutters are drawable).
+ * Desktop: hover follow. Touch: tap-and-drag in gutters, clear on lift. Reduced-motion: off.
  */
 (function () {
   "use strict";
@@ -41,6 +41,7 @@
   var themeObs = null;
   var colObs = null;
   var pageEl = null;
+  var moveOpts = { passive: false, capture: true };
 
   function allowed() {
     return !motion.matches;
@@ -52,6 +53,10 @@
 
   function isTouchLike(e) {
     return e.pointerType === "touch" || e.pointerType === "pen";
+  }
+
+  function inGutter(x) {
+    return x < colLeft || x >= colRight;
   }
 
   function parseInk() {
@@ -80,12 +85,26 @@
       return;
     }
     var rect = el.getBoundingClientRect();
-    colLeft = rect.left;
-    colRight = rect.right;
+    var cs = getComputedStyle(el);
+    var padL = parseFloat(cs.paddingLeft) || 0;
+    var padR = parseFloat(cs.paddingRight) || 0;
+    colLeft = rect.left + padL;
+    colRight = rect.right - padR;
+    if (colRight < colLeft) {
+      colLeft = rect.left;
+      colRight = rect.right;
+    }
   }
 
   function cellInMargin(x) {
-    return x + CELL <= colLeft || x >= colRight;
+    return x < colLeft || x + CELL > colRight;
+  }
+
+  function clipToGutters() {
+    ctx.beginPath();
+    if (colLeft > 0) ctx.rect(0, 0, colLeft, viewH);
+    if (colRight < viewW) ctx.rect(colRight, 0, viewW - colRight, viewH);
+    ctx.clip();
   }
 
   function cancelDraw() {
@@ -141,6 +160,8 @@
     raf = 0;
     if (!active) return;
     ctx.clearRect(0, 0, viewW, viewH);
+    ctx.save();
+    clipToGutters();
     ctx.lineWidth = 1 / dpr;
 
     var now = performance.now();
@@ -181,6 +202,7 @@
         }
       }
     }
+    ctx.restore();
     ripples = liveRipples;
     if (!active) {
       ctx.clearRect(0, 0, viewW, viewH);
@@ -203,9 +225,22 @@
     requestDraw();
   }
 
+  function claimMarginGesture(e, x) {
+    if (!e || !e.cancelable || !inGutter(x)) return;
+    e.preventDefault();
+  }
+
+  function endDrag() {
+    dragId = null;
+    ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
+    clearFollow();
+  }
+
   function onPointerDown(e) {
     if (!active || !isTouchLike(e)) return;
     if (dragId !== null) return;
+    cacheColumn();
+    if (!inGutter(e.clientX)) return;
     dragId = e.pointerId;
     follow(e.clientX, e.clientY);
   }
@@ -213,7 +248,9 @@
   function onPointerMove(e) {
     if (!active) return;
     if (isTouchLike(e)) {
-      if (dragId === e.pointerId) follow(e.clientX, e.clientY);
+      if (dragId !== e.pointerId) return;
+      follow(e.clientX, e.clientY);
+      claimMarginGesture(e, e.clientX);
       return;
     }
     if (!isMouse(e)) return;
@@ -222,10 +259,8 @@
   }
 
   function onPointerUp(e) {
-    if (!active || dragId === null || e.pointerId !== dragId) return;
-    dragId = null;
-    ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
-    clearFollow();
+    if (!active || dragId !== e.pointerId) return;
+    endDrag();
   }
 
   function onMouseMove(e) {
@@ -237,6 +272,46 @@
     if (!active || dragId !== null) return;
     if (e && e.relatedTarget) return;
     clearFollow();
+  }
+
+  function touchId() {
+    if (typeof dragId !== "string" || dragId.indexOf("touch:") !== 0) return NaN;
+    return parseInt(dragId.slice(6), 10);
+  }
+
+  function findTouch(list, id) {
+    if (!list) return null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].identifier === id) return list[i];
+    }
+    return null;
+  }
+
+  function onTouchStart(e) {
+    if (!active || dragId !== null || !e.touches || !e.touches.length) return;
+    cacheColumn();
+    var t = e.touches[0];
+    if (!inGutter(t.clientX)) return;
+    dragId = "touch:" + t.identifier;
+    follow(t.clientX, t.clientY);
+  }
+
+  function onTouchMove(e) {
+    if (!active) return;
+    var id = touchId();
+    if (isNaN(id)) return;
+    var t = findTouch(e.touches, id) || findTouch(e.changedTouches, id);
+    if (!t) return;
+    follow(t.clientX, t.clientY);
+    claimMarginGesture(e, t.clientX);
+  }
+
+  function onTouchEnd(e) {
+    if (!active) return;
+    var id = touchId();
+    if (isNaN(id)) return;
+    if (findTouch(e.touches, id)) return;
+    endDrag();
   }
 
   function nearCorner(x, y) {
@@ -281,9 +356,13 @@
   function bindInput() {
     window.addEventListener("resize", resize, { passive: true });
     window.addEventListener("pointerdown", onPointerDown, { passive: true });
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, moveOpts);
     window.addEventListener("pointerup", onPointerUp, { passive: true });
     window.addEventListener("pointercancel", onPointerUp, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, moveOpts);
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.addEventListener("mouseleave", onLeave, { passive: true });
     window.addEventListener("blur", onLeave);
@@ -293,9 +372,13 @@
   function unbindInput() {
     window.removeEventListener("resize", resize);
     window.removeEventListener("pointerdown", onPointerDown);
-    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointermove", onPointerMove, moveOpts);
     window.removeEventListener("pointerup", onPointerUp);
     window.removeEventListener("pointercancel", onPointerUp);
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("touchmove", onTouchMove, moveOpts);
+    window.removeEventListener("touchend", onTouchEnd);
+    window.removeEventListener("touchcancel", onTouchEnd);
     window.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("mouseleave", onLeave);
     window.removeEventListener("blur", onLeave);
