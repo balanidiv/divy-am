@@ -70,6 +70,13 @@
       "detail": ""
     }
   ],
+  "projects": [
+    {
+      "name": "foto",
+      "url": "https://foto.divy.am/",
+      "display_role": "Your zip, as a picture."
+    }
+  ],
   "work": [
     {
       "name": "Care.com",

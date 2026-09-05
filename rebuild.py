@@ -37,7 +37,7 @@ INTRO_RE = re.compile(
     re.S,
 )
 PROJECTS_RE = re.compile(
-    r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 projects-list">)(.*?)(</ul>\s*</section>)',
+    r'(<ul class="flex flex-col gap-1 list-none p-0 m-0 projects-list">)(.*?)(</ul>)',
     re.S,
 )
 WORK_RE = re.compile(
@@ -134,6 +134,23 @@ def render_intro(paragraphs: list) -> str:
     return "\n" + "\n".join(ps) + "\n        "
 
 
+def render_projects(projects: list) -> str:
+    if not projects:
+        return ""
+    lis = []
+    for proj in projects:
+        name = proj["name"]
+        url = proj["url"]
+        subtitle = proj.get("display_role") or ""
+        lis.append(
+            f'          <li>\n'
+            f'            <a href="{url}" target="_blank" rel="noopener noreferrer"><strong>{name}</strong></a> '
+            f'<span class="project-subtitle">{subtitle}</span>\n'
+            f'          </li>'
+        )
+    return "\n" + "\n".join(lis) + "\n        "
+
+
 def render_education(rows: list) -> str:
     lis = []
     for row in rows:
@@ -217,11 +234,7 @@ def main() -> int:
 
     html = sub_one(INTRO_RE, html, render_intro(data["intro"]), "intro")
     
-    projects = sorted(data.get("projects") or [], key=lambda proj: (
-        (proj.get("date_start") or "").strip()
-        or (proj.get("date_end") or "").strip()
-        or ("9999-12-31" if "present" in (proj.get("dates") or "").lower() or "now" in (proj.get("dates") or "").lower() else "0000-00-00")
-    ), reverse=True)
+    projects = data.get("projects") or []
     if projects and PROJECTS_RE.search(html):
         html = sub_one(PROJECTS_RE, html, render_projects(projects), "projects")
     
