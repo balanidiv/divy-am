@@ -40,6 +40,10 @@ WORK_RE = re.compile(
     r'(<ul class="flex flex-col gap-2 list-none p-0 m-0 work-list">)(.*?)(</ul>\s*</section>)',
     re.S,
 )
+PROJECTS_RE = re.compile(
+    r'(<ul class="flex flex-col gap-1 list-none p-0 m-0 projects-list">)(.*?)(</ul>\s*</section>)',
+    re.S,
+)
 EDU_RE = re.compile(
     r'(<h2 id="education-heading">Education</h2>\s*'
     r'<ul class="flex flex-col gap-4 list-none p-0 m-0">)(.*?)(</ul>)',
@@ -93,6 +97,18 @@ def render_work(jobs: list) -> str:
             f'              <div class="work-body">\n{body}\n'
             "              </div>\n"
             "            </details>\n"
+            "          </li>"
+        )
+    return "\n" + "\n".join(lis) + "\n        "
+
+
+def render_projects(projects: list) -> str:
+    lis = []
+    for proj in projects:
+        lis.append(
+            "          <li>\n"
+            f'            <a href="{proj["url"]}" target="_blank" rel="noopener noreferrer"><strong>{proj["name"]}</strong></a> '
+            f'<span class="project-subtitle">{proj["display_role"]}</span>\n'
             "          </li>"
         )
     return "\n" + "\n".join(lis) + "\n        "
@@ -193,6 +209,11 @@ def main() -> int:
         or ("9999-12-31" if "present" in (job.get("dates") or "").lower() or "now" in (job.get("dates") or "").lower() else "0000-00-00")
     ), reverse=True)
     html = sub_one(WORK_RE, html, render_work(work), "work")
+    
+    projects = data.get("projects") or []
+    if projects:
+        html = sub_one(PROJECTS_RE, html, render_projects(projects), "projects")
+    
     html = sub_one(EDU_RE, html, render_education(data["education"]), "education")
 
     html = WRITING_RE.sub("", html)

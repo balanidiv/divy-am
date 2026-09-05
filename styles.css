@@ -245,3 +245,16 @@ details[open] > summary .caret {
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
 }
+
+.projects-list li {
+  padding: 0.15rem 0;
+  line-height: 1.5;
+}
+.projects-list li:first-child {
+  padding-top: 0;
+}
+.project-subtitle {
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--fg) 45%, transparent);
+  font-weight: 400;
+}
