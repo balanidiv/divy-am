@@ -27,6 +27,7 @@ NOTION_API = "https://api.notion.com/v1"
 HOMEPAGE_ID = "3c5635ae428881c49643c4d8c1630f1f"
 WORK_PAGE_ID = "28b635ae428880ae9a82f68e329d9704"
 WORK_DB_ID = "28b635ae42888082ab01c925be084c98"
+TINKERINGS_DB_ID = "b1410e89913e4f67a1971f82798f1542"
 POSTS_DB_ID = "584f9cce43ae4bfb97eaae5a852a6da3"
 
 AO_WAYBACK = (
@@ -75,6 +76,12 @@ SOURCES = {
         "url": "https://app.notion.com/p/28b635ae42888082ab01c925be084c98",
         "collection": "collection://28b635ae-4288-80ea-b04b-000b17320bed",
         "maps_to": "Expandable work rows (Care.com, Gloco.ai, Deliverend, Aggressively Organic).",
+    },
+    "tinkerings_db": {
+        "title": "divy.am Tinkerings",
+        "url": "https://app.notion.com/p/b1410e89913e4f67a1971f82798f1542",
+        "collection": "collection://0402327e-c17a-438f-bfb8-9268e85dcd34",
+        "maps_to": "Tinkerings section. Shipped utilities. Only rows with Published checked.",
     },
     "posts_db": {
         "title": "divy.am Posts",
@@ -540,6 +547,19 @@ def pull_work(existing: dict) -> list[dict]:
     return rows
 
 
+def pull_tinkerings(existing: dict) -> list[dict]:
+    existing_by_key = {name_key(proj.get("name") or ""): proj for proj in existing.get("tinkerings") or []}
+    published_filter = {"property": "Published", "checkbox": {"equals": True}}
+    pages = query_database(TINKERINGS_DB_ID, published_filter)
+    rows = []
+    for page in pages:
+        row = extract_work_row(page, existing_by_key)
+        if row.get("name"):
+            rows.append(row)
+    rows.sort(key=work_sort_key, reverse=True)
+    return rows
+
+
 def extract_post(page: dict, published: bool) -> dict:
     props = page.get("properties") or {}
     title = prop_plain(prop_by_names(props, ["Title", "Name"])) or ""
@@ -612,6 +632,7 @@ def main() -> int:
     existing = load_existing()
     intro, education = pull_homepage()
     work = pull_work(existing)
+    tinkerings = pull_tinkerings(existing)
     posts_published, posts_excluded = pull_posts()
 
     tools_note = existing.get("tools_note")
@@ -632,6 +653,7 @@ def main() -> int:
         "tools_note": tools_note,
         "education": education,
         "work": work,
+        "tinkerings": tinkerings,
         "posts_published": posts_published,
         "posts_excluded": posts_excluded,
     }
@@ -645,6 +667,7 @@ def main() -> int:
     print(f"  intro         {len(intro)}")
     print(f"  education     {len(education)}")
     print(f"  work          {len(work)}")
+    print(f"  tinkerings    {len(tinkerings)}")
     print(f"  posts_pub     {len(posts_published)}")
     print(f"  posts_excl    {len(posts_excluded)}")
     skipped = "Hello draft unpublished" if any(

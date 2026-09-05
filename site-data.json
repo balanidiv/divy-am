@@ -64,6 +64,27 @@
       "detail": ""
     }
   ],
+  "tinkerings": [
+    {
+      "name": "foto",
+      "url": "https://foto.divy.am/",
+      "display_role": "Your zip, as a picture.",
+      "outcome": "Shipped utility — zip in, neighborhood SVG out",
+      "dates": "Sep 2026–present",
+      "date_start": "2026-09-03",
+      "date_end": null,
+      "body": [
+        {
+          "type": "p",
+          "html": "foto is a utility, not a company. Zip in → a recognizable neighborhood picture out as SVG you can copy."
+        },
+        {
+          "type": "p",
+          "html": "Place-true for the zip (Austin reads Barton Springs-tier; NYC like Chelsea), warmer and more human — not a map."
+        }
+      ]
+    }
+  ],
   "work": [
     {
       "name": "foto",
