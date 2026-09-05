@@ -116,8 +116,8 @@
   function cellInDeadSpace(x, y) {
     var r = x + CELL;
     var b = y + CELL;
-    if (r <= contentL || x >= contentR || b <= contentT || y >= contentB) return true;
-    return false;
+    var fullyInside = x >= contentL && r <= contentR && y >= contentT && b <= contentB;
+    return !fullyInside;
   }
 
   function clipToDeadSpace() {
