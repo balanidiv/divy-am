@@ -3,6 +3,8 @@
  * Shape reference: nikunjk.com. Color: site ink on paper, never neon.
  * Dead space = viewport minus main.page content box (sides, top, bottom). Never under prose.
  * Touch: track any tap-and-drag; paint only while the pointer is in dead space.
+ * Idle window listeners are passive. Non-passive preventDefault is limited to
+ * dead-space hit layers (touch-action: none) and claimed-gesture move handlers.
  */
 (function () {
   "use strict";
@@ -48,7 +50,10 @@
   var themeObs = null;
   var colObs = null;
   var pageEl = null;
-  var moveOpts = { passive: false, capture: true };
+  var idleOpts = { passive: true, capture: true };
+  var lockOpts = { passive: false, capture: true };
+  var gestureLockOn = false;
+  var hits = null;
 
   function allowed() {
     return !motion.matches;
@@ -111,6 +116,7 @@
       contentT = rect.top;
       contentB = rect.bottom;
     }
+    layoutHits();
   }
 
   function cellInDeadSpace(x, y) {
@@ -262,26 +268,112 @@
     if (document.body) document.body.style.touchAction = "";
   }
 
+  function onLockPointerMove(e) {
+    if (!dragClaimed || !e.cancelable) return;
+    if (isTouchLike(e)) e.preventDefault();
+  }
+
+  function onLockTouchMove(e) {
+    if (!dragClaimed || !e.cancelable) return;
+    e.preventDefault();
+  }
+
+  function bindGestureLock() {
+    if (gestureLockOn) return;
+    gestureLockOn = true;
+    window.addEventListener("pointermove", onLockPointerMove, lockOpts);
+    window.addEventListener("touchmove", onLockTouchMove, lockOpts);
+  }
+
+  function unbindGestureLock() {
+    if (!gestureLockOn) return;
+    gestureLockOn = false;
+    window.removeEventListener("pointermove", onLockPointerMove, lockOpts);
+    window.removeEventListener("touchmove", onLockTouchMove, lockOpts);
+  }
+
+  function applyHitBox(el, x, y, w, h) {
+    if (w < 1 || h < 1) {
+      el.style.display = "none";
+      el.style.pointerEvents = "none";
+      return;
+    }
+    el.style.display = "block";
+    el.style.pointerEvents = "auto";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = w + "px";
+    el.style.height = h + "px";
+  }
+
+  function layoutHits() {
+    if (!hits) return;
+    var visL = Math.max(0, contentL);
+    var visR = Math.min(viewW, contentR);
+    var visT = Math.max(0, contentT);
+    var visB = Math.min(viewH, contentB);
+    applyHitBox(hits[0], 0, 0, viewW, visT);
+    applyHitBox(hits[1], 0, visB, viewW, viewH - visB);
+    applyHitBox(hits[2], 0, visT, visL, visB - visT);
+    applyHitBox(hits[3], visR, visT, viewW - visR, visB - visT);
+  }
+
+  function makeHitLayer() {
+    var el = document.createElement("div");
+    el.className = "grid-cursor-hit";
+    el.setAttribute("aria-hidden", "true");
+    el.style.cssText =
+      "position:fixed;z-index:2;margin:0;padding:0;border:0;background:transparent;touch-action:none;pointer-events:auto;-webkit-user-select:none;user-select:none;";
+    var hitOpts = { passive: false };
+    el.addEventListener("pointerdown", onPointerDown, hitOpts);
+    el.addEventListener("pointermove", onPointerMove, hitOpts);
+    el.addEventListener("touchstart", onTouchStart, hitOpts);
+    el.addEventListener("touchmove", onTouchMove, hitOpts);
+    document.body.appendChild(el);
+    return el;
+  }
+
+  function bindHitLayers() {
+    if (hits) return;
+    hits = [makeHitLayer(), makeHitLayer(), makeHitLayer(), makeHitLayer()];
+    layoutHits();
+  }
+
+  function unbindHitLayers() {
+    if (!hits) return;
+    var hitOpts = { passive: false };
+    for (var i = 0; i < hits.length; i++) {
+      var el = hits[i];
+      el.removeEventListener("pointerdown", onPointerDown, hitOpts);
+      el.removeEventListener("pointermove", onPointerMove, hitOpts);
+      el.removeEventListener("touchstart", onTouchStart, hitOpts);
+      el.removeEventListener("touchmove", onTouchMove, hitOpts);
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }
+    hits = null;
+  }
+
+  function markClaimed(e) {
+    dragClaimed = true;
+    lockPan();
+    bindGestureLock();
+    if (e && e.cancelable) e.preventDefault();
+  }
+
   function claimMarginGesture(e, x, y) {
-    if (!e || !e.cancelable) return;
     if (inDeadSpace(x, y)) {
-      dragClaimed = true;
-      lockPan();
-      e.preventDefault();
+      markClaimed(e);
       return;
     }
     if (dragClaimed) {
-      e.preventDefault();
+      if (e && e.cancelable) e.preventDefault();
       return;
     }
+    if (!e) return;
     var dx = x - dragStartX;
     var towardLeft = dx < -GUTTER_DRAG_SLOP && dragStartX < viewW / 2;
     var towardRight = dx > GUTTER_DRAG_SLOP && dragStartX >= viewW / 2;
-    if (towardLeft || towardRight) {
-      dragClaimed = true;
-      lockPan();
-      e.preventDefault();
-    }
+    if (towardLeft || towardRight) markClaimed(e);
   }
 
   function beginTouchDrag(id, x, y) {
@@ -290,13 +382,17 @@
     dragStartX = x;
     dragStartY = y;
     dragClaimed = inDeadSpace(x, y);
-    if (dragClaimed) lockPan();
+    if (dragClaimed) {
+      lockPan();
+      bindGestureLock();
+    }
     follow(x, y);
   }
 
   function endDrag() {
     dragId = null;
     dragClaimed = false;
+    unbindGestureLock();
     unlockPan();
     ignoreMouseUntil = performance.now() + TOUCH_MOUSE_GUARD_MS;
     clearFollow();
@@ -434,14 +530,15 @@
   }
 
   function bindInput() {
+    bindHitLayers();
     window.addEventListener("resize", resize, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("pointerdown", onPointerDown, moveOpts);
-    window.addEventListener("pointermove", onPointerMove, moveOpts);
+    window.addEventListener("pointerdown", onPointerDown, idleOpts);
+    window.addEventListener("pointermove", onPointerMove, idleOpts);
     window.addEventListener("pointerup", onPointerUp, { passive: true });
     window.addEventListener("pointercancel", onPointerCancel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, moveOpts);
-    window.addEventListener("touchmove", onTouchMove, moveOpts);
+    window.addEventListener("touchstart", onTouchStart, idleOpts);
+    window.addEventListener("touchmove", onTouchMove, idleOpts);
     window.addEventListener("touchend", onTouchEnd, { passive: true });
     window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     window.addEventListener("mousemove", onMouseMove, { passive: true });
@@ -451,14 +548,16 @@
   }
 
   function unbindInput() {
+    unbindGestureLock();
+    unbindHitLayers();
     window.removeEventListener("resize", resize);
     window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("pointerdown", onPointerDown, moveOpts);
-    window.removeEventListener("pointermove", onPointerMove, moveOpts);
+    window.removeEventListener("pointerdown", onPointerDown, idleOpts);
+    window.removeEventListener("pointermove", onPointerMove, idleOpts);
     window.removeEventListener("pointerup", onPointerUp);
     window.removeEventListener("pointercancel", onPointerCancel);
-    window.removeEventListener("touchstart", onTouchStart, moveOpts);
-    window.removeEventListener("touchmove", onTouchMove, moveOpts);
+    window.removeEventListener("touchstart", onTouchStart, idleOpts);
+    window.removeEventListener("touchmove", onTouchMove, idleOpts);
     window.removeEventListener("touchend", onTouchEnd);
     window.removeEventListener("touchcancel", onTouchEnd);
     window.removeEventListener("mousemove", onMouseMove);
@@ -501,6 +600,7 @@
     hasPointer = false;
     dragId = null;
     dragClaimed = false;
+    unbindGestureLock();
     unlockPan();
     mouseX = -1;
     mouseY = -1;
