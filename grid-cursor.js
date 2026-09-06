@@ -246,8 +246,11 @@
           y = (row + dy) * CELL;
           if (x < -CELL || y < -CELL || x > viewW || y > viewH) continue;
           var euclidean = Math.sqrt(dx * dx + dy * dy);
-          var radialFade = Math.max(0, Math.min(1, 1 - (euclidean - 1.2) / 1.3));
-          radialFade = radialFade * radialFade * (3 - 2 * radialFade);
+          var radialFade = 1.0;
+          if (euclidean > 1.5) {
+            var t = Math.max(0, Math.min(1, (euclidean - 1.5) / 1.3));
+            radialFade = 1 - (t * t * (3 - 2 * t));
+          }
           if (dist === 0) fillCell(x, y, fillA * radialFade);
           else strokeCell(x, y, (STROKE[dist] || 0) * radialFade);
         }
