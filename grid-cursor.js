@@ -245,8 +245,14 @@
           x = (col + dx) * CELL;
           y = (row + dy) * CELL;
           if (x < -CELL || y < -CELL || x > viewW || y > viewH) continue;
-          if (dist === 0) fillCell(x, y, fillA);
-          else strokeCell(x, y, STROKE[dist] || 0);
+          var euclidean = Math.sqrt(dx * dx + dy * dy);
+          var radialFade = 1.0;
+          if (euclidean > 1.5) {
+            var t = Math.max(0, Math.min(1, (euclidean - 1.5) / 1.3));
+            radialFade = 1 - (t * t * (3 - 2 * t));
+          }
+          if (dist === 0) fillCell(x, y, fillA * radialFade);
+          else strokeCell(x, y, (STROKE[dist] || 0) * radialFade);
         }
       }
     }
